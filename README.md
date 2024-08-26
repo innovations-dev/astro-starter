@@ -70,23 +70,20 @@ pnpm add -D prettier prettier-plugin-astro eslint eslint-plugin-astro @typescrip
 ```js
 // eslintrc.mjs
 
-const eslintPluginAstro = require('eslint-plugin-astro');
+const eslintPluginAstro = require("eslint-plugin-astro");
 
 module.exports = {
-  extends: [
-    'plugin:astro/recommended',
-    'plugin:jsx-a11y/strict',
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-  ],
-  ...eslintPluginAstro.configs.recommended,
+  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  ...eslintPluginAstro.configs["flat/recommended"],
+  ...eslintPluginAstro.configs["jsx-a11y-recommended"],
   env: {
     node: true,
   },
   rules: {
-    '@typescript-eslint/ban-ts-comment': 'warn',
+    "@typescript-eslint/ban-ts-comment": "warn",
   },
 };
+
 ```
 
 ```js
