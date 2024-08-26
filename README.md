@@ -238,3 +238,21 @@ export default {
 	}
 }
 ```
+
+## Astro Integrations
+
+### Sitemap
+
+```shell
+pnpm astro add sitemap
+```
+
+### Icons
+
+```shell
+pnpm astro add astro-icon
+```
+
+```shell
+pnpm @iconify/json/cib @iconify/json/lucide
+```

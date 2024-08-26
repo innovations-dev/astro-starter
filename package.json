@@ -11,8 +11,12 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.3",
+    "@astrojs/sitemap": "^3.1.6",
     "@astrojs/tailwind": "^5.1.0",
+    "@iconify-json/cib": "^1.1.10",
+    "@iconify-json/lucide": "^1.1.208",
     "astro": "^4.14.5",
+    "astro-icon": "^1.1.1",
     "tailwindcss": "^3.4.10",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.5.4"
