@@ -239,6 +239,10 @@ export default {
 }
 ```
 
+```shell
+pnpm add class-variance-authority
+```
+
 ## Astro Integrations
 
 ### Sitemap
@@ -254,5 +258,5 @@ pnpm astro add astro-icon
 ```
 
 ```shell
-pnpm @iconify/json/cib @iconify/json/lucide
+pnpm @iconify-json/cib @iconify-json/lucide
 ```
