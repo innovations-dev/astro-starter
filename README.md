@@ -70,6 +70,8 @@ pnpm add -D prettier prettier-plugin-astro eslint eslint-plugin-astro @typescrip
 ```js
 // eslintrc.mjs
 
+const eslintPluginAstro = require('eslint-plugin-astro');
+
 module.exports = {
   extends: [
     'plugin:astro/recommended',
@@ -77,17 +79,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
   ],
-  overrides: [
-    {
-      files: ['*.astro'],
-      parser: 'astro-eslint-parser',
-      parserOptions: {
-      ecmaVersion: 'latest',
-        extraFileExtensions: ['.astro'],
-      },
-      rules: {},
-    },
-  ],
+  ...eslintPluginAstro.configs.recommended,
   env: {
     node: true,
   },

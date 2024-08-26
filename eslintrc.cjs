@@ -1,21 +1,12 @@
+const eslintPluginAstro = require('eslint-plugin-astro');
+
 module.exports = {
   extends: [
-    'plugin:astro/recommended',
-    'plugin:jsx-a11y/strict',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
   ],
-  overrides: [
-    {
-      files: ['*.astro'],
-      parser: 'astro-eslint-parser',
-      parserOptions: {
-      ecmaVersion: 'latest',
-        extraFileExtensions: ['.astro'],
-      },
-      rules: {},
-    },
-  ],
+  ...eslintPluginAstro.configs['flat/recommended'],
+  ...eslintPluginAstro.configs['jsx-a11y-recommended'],
   env: {
     node: true,
   },
