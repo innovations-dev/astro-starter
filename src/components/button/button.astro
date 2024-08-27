@@ -1,12 +1,15 @@
 ---
 import { buttonVariants, type ButtonProps } from "./button";
 
-export interface Props extends ButtonProps {}
+export interface Props extends ButtonProps {
+  label: string;
+}
 
 const {
   variant,
   size,
   class: classes,
+  label,
   as: Element = "button",
   ...rest
 } = Astro.props;
@@ -19,7 +22,9 @@ const {
     classes,
   ]}
   type="button"
+  aria-label={label}
   {...rest}
 >
+  <span class="sr-only">{label}</span>
   <slot />
 </Element>

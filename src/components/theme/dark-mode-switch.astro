@@ -1,0 +1,101 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { buttonVariants } from "../button/button";
+import ThemeIcons from "./theme-icons.astro";
+
+interface Prop extends HTMLAttributes<'button'> {}
+
+const { class: classes, ...rest } = Astro.props;
+---
+
+<dark-mode-switch>
+  <button
+    id="darkModeToggle"
+    class:list={[buttonVariants({ variant: "icon-ghost" }), classes]}  
+    {...rest}
+    aria-label="Toggle dark mode"
+  >
+    <span class="sr-only">Toggle dark mode</span>
+    <ThemeIcons/>
+  </button>
+</dark-mode-switch>
+
+<script>
+class DarkMode extends HTMLElement {
+  private button: HTMLButtonElement;
+  private mediaQuery: MediaQueryList;
+  private storageKey = 'theme';
+
+  constructor() {
+    super();
+    this.button = this.querySelector('button') as HTMLButtonElement;
+    this.mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    // initialize dark mode
+    this.applyDarkMode();
+
+    // add event listeners
+    this.button.addEventListener("click", () => this.toggleDarkMode());
+    this.mediaQuery.addEventListener("change", () => this.applyDarkMode());
+  }
+
+  /**
+   * Apply dark mode based on system preference or stored preference
+   * 
+   * @returns void
+   */
+  private applyDarkMode() {
+    const systemPreference = this.mediaQuery.matches;
+    const storedPreference = localStorage.getItem(this.storageKey);
+
+    if (storedPreference === null || systemPreference !== (storedPreference === 'true')) {
+      this.setDarkMode(systemPreference);
+      localStorage.setItem(this.storageKey, String(systemPreference));
+    } else {
+      this.setDarkMode(storedPreference === 'true');
+    }
+  }
+
+  /**
+   * Toggle dark mode
+   * 
+   * @returns void
+   */
+  private toggleDarkMode() {
+    const newMode = !document.documentElement.classList.contains('dark');
+    this.setDarkMode(newMode);
+    localStorage.setItem(this.storageKey, String(newMode));
+  }
+
+  /**
+   * Set dark mode
+   * 
+   * @param isDark - boolean
+   * @returns void
+   */
+  private setDarkMode(isDark: boolean) {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
+}
+
+// register custom element and initialize
+customElements.define("dark-mode-switch", DarkMode);
+</script>
+
+<!-- 
+Usage
+
+  <dark-mode-switch>
+    <button
+      id="darkModeToggle"
+      class:list={[buttonVariants({ variant: "icon-ghost" }), classes]}  
+      {...rest}
+      aria-label="Toggle dark mode"
+    >
+    </button>
+  </dark-mode-switch>
+-->

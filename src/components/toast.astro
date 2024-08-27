@@ -1,0 +1,21 @@
+<section
+  id="toaster-wrapper"
+  data-position="bottom-right"
+  data-rich-colors="true"
+>
+</section>
+
+<script>
+  import { toast } from "toaster-ts";
+  const notify = document.querySelector("#notify");
+  notify?.addEventListener("click", (e) => {
+    e.preventDefault();
+    toast.error("Event has been created");
+  });
+</script>
+
+
+<!-- 
+Usage:
+  <Toast />
+-->
