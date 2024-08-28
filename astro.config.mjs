@@ -6,5 +6,10 @@ import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), sitemap(), icon()]
+  integrations: [tailwind(), sitemap(), icon()],
+  vite: {
+    ssr: {
+      noExternal: ['embla-carousel'],
+    },
+  },
 });

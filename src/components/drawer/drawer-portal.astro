@@ -1,0 +1,28 @@
+---
+---
+
+<div id="drawer-portal">
+  <slot />
+</div>
+
+<drawer-portal></drawer-portal>
+<script>
+  class DrawerPortal extends HTMLElement {
+    portal: HTMLElement | null = null;
+
+    connectedCallback() {
+      this.portal = document.getElementById('drawer-portal');
+      if (this.portal) {
+        document.body.appendChild(this.portal);
+      }
+    }
+
+    disconnectedCallback() {
+      if (this.portal && this.portal.parentNode) {
+        this.portal.parentNode.removeChild(this.portal);
+      }
+    }
+  }
+
+  customElements.define('drawer-portal', DrawerPortal);
+</script>

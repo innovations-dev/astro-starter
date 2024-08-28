@@ -1,11 +1,35 @@
 ---
 import { buttonVariants } from "../components/button/button";
-import Dialog from "../components/dialog.astro";
 import Layout from "../layouts/root-layout.astro";
+import Drawer from '../components/drawer/drawer.astro';
+import Carousel from '../components/carousel.astro';
 
 import '../styles/global.css';
+
+type CarouselItem = {
+  type: 'color' | 'text'; // Adjust based on your requirements
+  content: string;
+};
+
+
+const carouselItems: CarouselItem[] = [
+  { type: 'color', content: 'Slide 1' },
+  { type: 'text', content: 'Welcome to our amazing website!' },
+  { type: 'color', content: 'Slide 3' },
+  { type: 'text', content: 'Discover our latest products and services' },
+];
 ---
 
 <Layout title="Home">
+  <main class="relative z-0">
+    <Carousel items={carouselItems} className="min-h-screen mb-8" />
 
+    <Drawer side="left">
+      <h2 class="text-xl font-bold mb-4">Drawer Content</h2>
+      <p>This is the content of the drawer.</p>
+      <button id="closeDrawer" class={buttonVariants({ variant: "destructive" })}>
+        Close Drawer
+      </button>
+    </Drawer>
+  </main>
 </Layout>

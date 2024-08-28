@@ -1,0 +1,57 @@
+---
+import DrawerPortal from './drawer-portal.astro';
+
+interface Props {
+  side: 'left' | 'right' | 'top' | 'bottom';
+}
+
+const { side = 'left' } = Astro.props;
+
+const sideClasses = {
+  left: 'left-0 top-0 h-full',
+  right: 'right-0 top-0 h-full',
+  top: 'top-0 left-0 w-full',
+  bottom: 'bottom-0 left-0 w-full',
+};
+
+const translateClasses = {
+  left: '-translate-x-full',
+  right: 'translate-x-full',
+  top: '-translate-y-full',
+  bottom: 'translate-y-full',
+};
+---
+
+<DrawerPortal>
+  <div class="drawer-wrapper">
+    <div
+      class={`fixed ${sideClasses[side]} w-[350px] bg-white shadow-lg transition-transform duration-300 ease-in-out z-[9999] ${translateClasses[side]}`}
+      id="drawer"
+    >
+      <div class="p-4">
+        <slot />
+      </div>
+    </div>
+    <div id="drawer-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-[9998] hidden"></div>
+  </div>
+</DrawerPortal>
+
+<script define:vars={{ side, translateClasses }}>
+  const drawer = document.getElementById('drawer');
+  const overlay = document.getElementById('drawer-overlay');
+  const toggleDrawer = () => {
+    drawer?.classList.toggle(translateClasses[side]);
+    overlay?.classList.toggle('hidden');
+  };
+
+  // Toggle drawer on button click
+  const toggleButton = document.getElementById('toggleDrawer');
+  toggleButton?.addEventListener('click', toggleDrawer);
+
+  // Close drawer when clicking on overlay
+  overlay?.addEventListener('click', toggleDrawer);
+
+  // Close drawer when clicking on close button
+  const closeButton = document.getElementById('closeDrawer');
+  closeButton?.addEventListener('click', toggleDrawer);
+</script>
