@@ -1,0 +1,18 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends HTMLAttributes<'kbd'> {
+  keys: string[];
+}
+
+const { keys, class: className, ...rest } = Astro.props;
+---
+<Fragment>
+  <kbd class:list={["inline-flex items-center gap-1 rounded-md outline-white outline-3", className]} {...rest}>
+    {!!keys?.length ? keys.map((key) => (
+      <p class="inline-block min-w-[20px] px-1.5 py-0.5 text-[11px] font-sans font-medium">
+        {key}
+      </p>
+    )) : null}
+  </kbd>
+</Fragment>

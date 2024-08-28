@@ -1,0 +1,108 @@
+---
+import { Icon } from 'astro-icon/components';
+import Kbd from './kbd.astro';
+
+interface Props {
+  items: { 
+    label: string; 
+    href?: string; 
+    onClick?: string;
+    icon?: string;
+    shortcut?: string[];
+  }[];
+  position?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
+  offset?: { x: number; y: number };
+}
+
+const { items, position = 'bottom-right', offset = { x: 0, y: 0 } } = Astro.props;
+
+const positionClasses = {
+  'bottom-right': 'top-full right-0',
+  'bottom-left': 'top-full left-0',
+  'top-right': 'bottom-full right-0',
+  'top-left': 'bottom-full left-0',
+};
+
+const dropdownPositionClass = positionClasses[position];
+---
+
+<div class="relative inline-block text-left">
+  <button
+    type="button"
+    class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4"
+    id="dropdown-trigger"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    Options
+    <Icon name="lucide:chevron-down" class="ml-2 h-4 w-4" size={24} />
+  </button>
+
+  <div
+    class={`absolute ${dropdownPositionClass} w-72 rounded-md border border-muted bg-background shadow-md z-10 hidden`}
+    role="menu"
+    aria-orientation="vertical"
+    aria-labelledby="dropdown-trigger"
+    style={`transform: translate(${offset.x}px, ${offset.y}px);`}
+  >
+    <div class="py-1" role="none">
+      {items.map((item, index) => (
+        item.href ? (
+          <a
+            href={item.href}
+            class="flex items-center px-4 py-2 text-sm text-foreground hover:bg-foreground/70 hover:text-background"
+            role="menuitem"
+          >
+            {item.icon && <Icon name={item.icon} class="mr-2 h-4 w-4" />}
+            <span class="flex-grow">{item.label}</span>
+            {item.shortcut && <Kbd class="inline ml-2 text-xs text-gray-500" keys={item.shortcut}/>}
+          </a>
+        ) : (
+          <button
+            type="button"
+            class="flex items-center w-full text-left px-4 py-2 text-sm text-foreground hover:bg-foreground/70 hover:text-background"
+            role="menuitem"
+            data-onclick={item.onClick}
+            data-index={index}
+          >
+            {item.icon && <Icon name={item.icon} class="mr-2 h-4 w-4" />}
+            <span class="flex-grow">{item.label}</span>
+            {item.shortcut && <Kbd class="inline ml-2 text-xs text-gray-500" keys={item.shortcut}/>}
+          </button>
+        )
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  const trigger = document.getElementById('dropdown-trigger');
+  const menu = trigger?.nextElementSibling;
+
+  function toggleMenu() {
+    menu?.classList.toggle('hidden');
+    trigger?.setAttribute('aria-expanded', menu?.classList.contains('hidden') ? 'false' : 'true');
+  }
+
+  trigger?.addEventListener('click', toggleMenu);
+
+  document.addEventListener('click', (event) => {
+    if (!trigger?.contains(event.target as Node) && !menu?.contains(event.target as Node)) {
+      menu?.classList.add('hidden');
+      trigger?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Handle custom onClick events
+  menu?.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    const button = target.closest('button[data-onclick]');
+    if (button) {
+      const onClickFunction = button.getAttribute('data-onclick');
+      if (onClickFunction && window[onClickFunction as keyof typeof window]) {
+        (window[onClickFunction as keyof typeof window] as Function)();
+      }
+      toggleMenu();
+    }
+  });
+</script>

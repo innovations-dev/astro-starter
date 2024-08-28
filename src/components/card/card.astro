@@ -1,0 +1,31 @@
+---
+interface Props {
+  className?: string;
+  variant?: 'default' | 'destructive';
+}
+
+const { className = '', variant = 'default' } = Astro.props;
+
+const variantClasses = {
+  default: 'bg-card text-card-foreground',
+  destructive: 'bg-destructive text-destructive-foreground'
+};
+
+const baseClasses = 'rounded-lg border shadow-sm';
+---
+
+<div class:list={[baseClasses, variantClasses[variant], className]}>
+  <slot />
+</div>
+
+<script>
+  class Card extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    // Add any client-side functionality here if needed
+  }
+
+  customElements.define('astro-card', Card);
+</script>

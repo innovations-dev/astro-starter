@@ -1,0 +1,64 @@
+---
+interface AccordionItem {
+  title: string;
+  content: string;
+}
+
+interface Props {
+  items: AccordionItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="w-full max-w-md mx-auto space-y-2">
+  {items.map((item, index) => (
+    <div class="border rounded-lg">
+      <h3>
+        <button
+          type="button"
+          class="flex justify-between w-full px-4 py-2 text-left text-sm font-medium hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75"
+          data-accordion-toggle={`accordion-${index}`}
+        >
+          <span>{item.title}</span>
+          <svg
+            class="w-5 h-5 transition-transform"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </button>
+      </h3>
+      <div
+        id={`accordion-${index}`}
+        class="hidden px-4 pb-2 text-sm text-gray-500"
+      >
+        <p>{item.content}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+<script>
+  function toggleAccordion(index: number) {
+    const button = document.querySelector(`[data-accordion-toggle="accordion-${index}"]`);
+    const content = document.getElementById(`accordion-${index}`);
+    const icon = button?.querySelector('svg');
+
+    if (button && content && icon) {
+      content.classList.toggle('hidden');
+      icon.classList.toggle('rotate-180');
+    }
+  }
+
+  document.querySelectorAll('[data-accordion-toggle]').forEach((button, index) => {
+    button.addEventListener('click', () => toggleAccordion(index));
+  });
+</script>

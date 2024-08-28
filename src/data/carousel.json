@@ -1,0 +1,18 @@
+[
+  {
+    "type": "color",
+    "content": "Slide 1"
+  },
+  {
+    "type": "text",
+    "content": "Welcome to our amazing website!"
+  },
+  {
+    "type": "color",
+    "content": "Slide 3"
+  },
+  {
+    "type": "text",
+    "content": "Discover our latest products and services"
+  }
+]
