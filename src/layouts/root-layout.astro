@@ -1,8 +1,9 @@
 ---
-import DarkModeSwitch from "../components/theme/dark-mode-switch.astro";
+import Button from "../components/button/button.astro";
+import Footer from "../components/structure/footer/footer.astro";
+import Header from "../components/structure/header/header.astro";
 import Toast from "../components/toast.astro";
 import "../styles/global.css";
-import "toaster-ts/dist/bundle.css";
 
 interface Props {
   title: string;
@@ -22,19 +23,23 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <header>
-      <div class="container">
-        Brand Here
-
-      </div>
-    </header>
-    <slot />
-    <footer>
-      <div class="container">
-        Brand Here
-      </div>
-    </footer>
-    <DarkModeSwitch/>
+    <div class="flex flex-col min-h-screen">
+      <Header />
+      <main class="container mx-auto flex-1">
+        <slot />
+        <Button id="notify" label="test">Click me</Button>
+      </main>
+      <Footer />
+    </div>
     <Toast />
   </body>
 </html>
+
+
+<script>
+  import { toast } from "toaster-ts";
+  const button = document.querySelector("#test");
+  button?.addEventListener("click", () => {
+    toast.error("Event has been created");
+  });
+</script>
