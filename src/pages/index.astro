@@ -1,35 +1,66 @@
 ---
-import { buttonVariants } from "../components/button/button";
-import Layout from "../layouts/root-layout.astro";
-import Drawer from '../components/drawer/drawer.astro';
-import Carousel from '../components/carousel.astro';
+import Layout from "@/layouts/root-layout.astro";
+import Carousel from "@/components/carousel.astro";
+import Card from "@/components/card/card.astro";
+import CardHeader from "@/components/card/card-header.astro";
+import CardTitle from "@/components/card/card-title.astro";
+import CardDescription from "@/components/card/card-description.astro";
+import CardContent from "@/components/card/card-content.astro";
+import CardFooter from "@/components/card/card-footer.astro";
+import Accordion from "@/components/accordion/accordion.astro";
+import DropdownMenu from "@/components/dropdown-menu.astro";
 
-import '../styles/global.css';
+import menuItems from "../data/dropdown.json";
+import accordionItems from "../data/accordion.json";
+import carouselItems from "../data/carousel.json";
 
-type CarouselItem = {
-  type: 'color' | 'text'; // Adjust based on your requirements
-  content: string;
-};
-
-
-const carouselItems: CarouselItem[] = [
-  { type: 'color', content: 'Slide 1' },
-  { type: 'text', content: 'Welcome to our amazing website!' },
-  { type: 'color', content: 'Slide 3' },
-  { type: 'text', content: 'Discover our latest products and services' },
-];
+import "../styles/global.css";
 ---
 
 <Layout title="Home">
-  <main class="relative z-0">
+  <main class="relative z-0 p-4">
     <Carousel items={carouselItems} className="min-h-screen mb-8" />
+    <DropdownMenu
+      items={menuItems}
+      position="bottom-left"
+      offset={{ x: 20, y: 10 }}
+    />
 
-    <Drawer side="left">
-      <h2 class="text-xl font-bold mb-4">Drawer Content</h2>
-      <p>This is the content of the drawer.</p>
-      <button id="closeDrawer" class={buttonVariants({ variant: "destructive" })}>
-        Close Drawer
-      </button>
-    </Drawer>
+    <div class="max-w-md mx-auto">
+      <Card>
+        <CardHeader>
+          <CardTitle>Card Title</CardTitle>
+          <CardDescription>Card Description</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Card Content goes here.</p>
+        </CardContent>
+        <CardFooter>
+          <p>Card Footer</p>
+        </CardFooter>
+      </Card>
+    </div>
+    <Accordion items={accordionItems} />
+    <div class="max-w-md mx-auto mt-8">
+      <Card variant="destructive">
+        <CardHeader>
+          <CardTitle>Destructive Card</CardTitle>
+          <CardDescription>This is a destructive card variant</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Destructive card content goes here.</p>
+        </CardContent>
+        <CardFooter>
+          <p>Destructive Card Footer</p>
+        </CardFooter>
+      </Card>
+    </div>
   </main>
 </Layout>
+
+<script>
+  function handleSignOut() {
+    console.log("Sign out clicked");
+    // Add your sign out logic here
+  }
+</script>

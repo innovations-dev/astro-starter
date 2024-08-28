@@ -1,12 +1,8 @@
 ---
 
-interface CarouselItem {
-  type: 'color' | 'text';
-  content: string;
-}
 
 interface Props {
-  items: CarouselItem[];
+  items: { type: string; content: string; }[];
   className?: string;
 }
 
