@@ -1,0 +1,39 @@
+---
+import Layout from '@/layouts/root-layout.astro';
+import Pagination from '@/components/pagination.astro';
+
+// Simulate fetching blog posts
+const totalPosts = 50;
+const postsPerPage = 10;
+const totalPages = Math.ceil(totalPosts / postsPerPage);
+
+// Get the current page from the URL parameter
+const { page } = Astro.params;
+const currentPage = page ? parseInt(page) : 1;
+
+// Calculate the range of posts to display
+const startIndex = (currentPage - 1) * postsPerPage;
+const endIndex = startIndex + postsPerPage;
+
+// Generate dummy post titles
+const posts = Array.from({ length: postsPerPage }, (_, i) => ({
+  id: startIndex + i + 1,
+  title: `Blog Post ${startIndex + i + 1}`,
+}));
+---
+
+<Layout title="Blog Posts">
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Blog Posts</h1>
+    
+    <ul class="space-y-4 mb-8">
+      {posts.map((post) => (
+        <li class="bg-white shadow rounded-lg p-4">
+          <h2 class="text-xl font-semibold">{post.title}</h2>
+        </li>
+      ))}
+    </ul>
+    
+    <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/blog" showCount={2} />
+  </main>
+</Layout>

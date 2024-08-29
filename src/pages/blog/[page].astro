@@ -1,0 +1,7 @@
+---
+export { default as BlogPage } from '../blog.astro'; // Renamed export
+
+export function getStaticPaths() {
+  return Array.from({ length: 5 }, (_, i) => ({ params: { page: (i + 1).toString() } }));
+}
+---
