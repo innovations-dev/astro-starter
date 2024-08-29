@@ -1,0 +1,60 @@
+---
+interface Props {
+  speed?: number;
+  direction?: 'up' | 'down' | 'left' | 'right';
+  class?: string;
+}
+
+const { speed = 2, direction = 'up', class: className = '' } = Astro.props;
+
+const directionMap = {
+  up: 'translate-y-[var(--parallax-offset)]',
+  down: '-translate-y-[var(--parallax-offset)]',
+  left: 'translate-x-[var(--parallax-offset)]',
+  right: '-translate-x-[var(--parallax-offset)]',
+};
+
+const parallaxClass = directionMap[direction];
+---
+
+<div class={`parallax-wrapper overflow-hidden ${className}`}>
+  <div class={`parallax-content will-change-transform ${parallaxClass}`}>
+    <slot />
+  </div>
+</div>
+
+<style define:vars={{ 'parallax-speed': speed }}>
+  .parallax-wrapper {
+    position: relative;
+  }
+  .parallax-content {
+    --parallax-offset: calc(var(--parallax-speed) * var(--scroll-offset, 0) * 1px);
+    transition: transform 0.1s linear;
+  }
+</style>
+
+<script>
+  function setupParallax() {
+    const parallaxWrappers = document.querySelectorAll('.parallax-wrapper');
+    
+    function updateParallax() {
+      parallaxWrappers.forEach((wrapper) => {
+        const rect = wrapper.getBoundingClientRect();
+        const scrollOffset = window.innerHeight - rect.top;
+        (wrapper as HTMLElement).style.setProperty('--scroll-offset', scrollOffset.toString());
+      });
+    }
+
+    window.addEventListener('scroll', updateParallax);
+    window.addEventListener('resize', updateParallax);
+
+    // Initial update
+    updateParallax();
+  }
+
+  // Run on initial load
+  setupParallax();
+
+  // Re-run on Astro page changes
+  document.addEventListener('astro:after-swap', setupParallax);
+</script>
