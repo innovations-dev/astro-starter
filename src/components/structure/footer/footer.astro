@@ -3,7 +3,8 @@ import type { Brand } from "@/schema/brand";
 import type { Link } from "@/schema/link";
 
 import { getCollection } from "astro:content";
-import { getLinks } from "../../../utils/astro";
+
+import links from "@/data/footer.json";
 
 // get the current path
 const pathname = new URL(Astro.request.url).pathname;
@@ -12,9 +13,6 @@ const currentPath = pathname.length > 1 ? pathname.slice(1) : pathname; // remov
 // get the brand
 const brand: Brand[] = await getCollection("brand");
 
-// get the footer links
-let allLinks = await getCollection("links");
-const links = getLinks(allLinks, "footer", currentPath);
 ---
 
 <footer class="rounded-lg shadow m-4 border-t-foreground/20 border-[0.5px]">
@@ -32,7 +30,7 @@ const links = getLinks(allLinks, "footer", currentPath);
       {links.map((link: Link) => {
         return (
           <li>
-            <a href={link.href} class="hover:underline me-4 md:me-6">{link.text}</a>
+            <a href={link.href} class="hover:underline me-4 md:me-6">{link.name}</a>
           </li>
         )
       })}
