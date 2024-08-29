@@ -1,15 +1,22 @@
-import { z, defineCollection, type CollectionEntry } from "astro:content";
+import { z } from "astro:content";
 
-const linkSchema = z.object({
+const _linkSchema = z.object({
   name: z.string(),
-  description: z.string(),
-  url: z.string(),
-  icon: z.string(),
+  description: z.string().optional(),
+  href: z.string(),
+  icon: z.string().optional(),
+  subs: z
+    .array(
+      z.object({
+        name: z.string(),
+        description: z.string().optional(),
+        href: z.string(),
+        icon: z.string().optional(),
+      })
+    )
+    .optional(),
 });
 
-export const link = defineCollection({
-  type: "data",
-  schema: linkSchema,
-});
+const linkSchema = _linkSchema.extend({});
 
-export type Link = CollectionEntry<"link">;
+export type Link = z.infer<typeof linkSchema>;

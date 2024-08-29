@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Home",
+    "href": "/"
+  },
+  {
+    "name": "Company",
+    "href": "/company"
+  },
+  {
+    "name": "Marketplace",
+    "href": "/marketplace"
+  },
+  {
+    "name": "Features",
+    "href": "/features"
+  },
+  {
+    "name": "Team",
+    "href": "/team",
+    "subs": [
+      {
+        "name": "Marketplace",
+        "href": "/marketplace"
+      },
+      {
+        "name": "Features",
+        "href": "/features"
+      }
+    ]
+  },
+  {
+    "name": "Contact",
+    "href": "/contact"
+  }
+]
