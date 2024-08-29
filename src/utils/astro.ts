@@ -1,21 +1,22 @@
 import type { Link } from "@/schema/link";
-import { getCollection } from "astro:content";
-
+import type { CollectionEntry } from "astro:content";
+type entry = CollectionEntry<"link">;
 export function getLinks(
   links: Link[],
   category: string,
   currentPath?: string
 ) {
   if (!links || !links.length) return [];
-  const _links = links.filter((entry: Link) => entry.id === category);
-  return _links[0].data.map((link: Link) => {
-    if (currentPath) {
-      const isHome = link.url === "/";
+  return links.map((link) => {
+    if (link.subs) {
       return {
         ...link,
-        isActive: link.url === currentPath || (isHome && currentPath === ""),
+        isActive: link.subs.some((sub) => sub.href === currentPath),
       };
     }
-    return link;
+    return {
+      ...link,
+      isActive: link.href === currentPath,
+    };
   });
 }
