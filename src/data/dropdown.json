@@ -1,24 +1,24 @@
 [
   {
-    "label": "Account settings",
+    "name": "Account settings",
     "href": "#",
     "icon": "lucide:user",
     "shortcut": ["Ctrl", ","]
   },
   {
-    "label": "Support",
+    "name": "Support",
     "href": "#",
     "icon": "lucide:help-circle",
     "shortcut": ["Ctrl", "/"]
   },
   {
-    "label": "License",
+    "name": "License",
     "href": "#",
     "icon": "lucide:file-text",
     "shortcut": ["Ctrl", "L"]
   },
   {
-    "label": "Sign out",
+    "name": "Sign out",
     "onClick": "handleSignOut()",
     "icon": "lucide:log-out",
     "shortcut": ["Ctrl", "Q"]
