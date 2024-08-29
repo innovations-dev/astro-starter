@@ -1,16 +1,6 @@
 import type { HTMLAttributes } from "astro/types";
 import { cva, type VariantProps } from "class-variance-authority";
 
-export type ButtonVariant =
-  | "default"
-  | "destructive"
-  | "outline"
-  | "secondary"
-  | "ghost"
-  | "link"
-  | "icon"
-  | "icon-ghost";
-export type ButtonSize = "default" | "sm" | "lg" | "icon";
 export type ButtonAs = "button" | "a";
 export type ButtonProps = HTMLAttributes<"button"> &
   VariantProps<typeof buttonVariants> & { as?: ButtonAs };
