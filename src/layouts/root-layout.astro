@@ -1,9 +1,8 @@
 ---
-import Button from "../components/button/button.astro";
-import Footer from "../components/structure/footer/footer.astro";
-import Header from "../components/structure/header/header.astro";
-import Toast from "../components/toast.astro";
-import "../styles/global.css";
+import Footer from "@/components/structure/footer/footer.astro";
+import Header from "@/components/structure/header/header.astro";
+import Toast from "@/components/toast.astro";
+import "@/styles/global.css";
 
 interface Props {
   title: string;
@@ -27,7 +26,6 @@ const { title } = Astro.props;
       <Header />
       <main class="container mx-auto flex-1">
         <slot />
-        <Button id="notify" label="test">Click me</Button>
       </main>
       <Footer />
     </div>

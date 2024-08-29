@@ -1,0 +1,101 @@
+---
+import Layout from "@/layouts/root-layout.astro";
+import Carousel from "@/components/carousel.astro";
+import Card from "@/components/card/card.astro";
+import CardHeader from "@/components/card/card-header.astro";
+import CardTitle from "@/components/card/card-title.astro";
+import CardDescription from "@/components/card/card-description.astro";
+import CardContent from "@/components/card/card-content.astro";
+import CardFooter from "@/components/card/card-footer.astro";
+import Accordion from "@/components/accordion/accordion.astro";
+import DropdownMenu from "@/components/dropdown-menu.astro";
+
+import menuItems from "../data/dropdown.json";
+import accordionItems from "../data/accordion.json";
+import carouselItems from "../data/carousel.json";
+import Parallax from "@/components/parallax.astro";
+const colors = [
+  '#FF6B6B',
+  '#4ECDC4',
+  '#45B7D1',
+  '#FFA07A',
+  '#98D8C8'
+];
+
+import "../styles/global.css";
+import { Icon } from "astro-icon/components";
+
+---
+ 
+<Layout title="Home">
+  <main class="relative z-0 p-4">d
+    
+    <Carousel items={carouselItems} className="min-h-screen mb-8" />
+
+
+    <Parallax speed={1.5} direction="left" class="w-full h-64 my-8">
+      <Icon name="lucide:chevron-up" size={100} />
+    </Parallax>
+
+    <p class="instructions">
+      To get started, open the directory <code>src/pages</code> in your project.<br />
+      <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
+    </p>
+
+    <Parallax speed={2} direction="up" class="w-full h-48 my-8">
+      <div class="bg-blue-500 w-full h-full flex items-center justify-center text-white text-2xl font-bold">
+        Sliding Parallax Text
+      </div>
+    </Parallax>
+
+    <Parallax speed={1} direction="down" class="w-full h-64 my-8">
+      <img src="/path/to/image2.jpg" alt="Parallax Image 2" class="w-full h-full object-cover" />
+    </Parallax>
+
+
+    <DropdownMenu
+      trigger="Dropdown"
+      items={menuItems}
+      position="bottom-left"
+      offset={{ x: 20, y: 10 }}
+    />
+
+    <div class="max-w-md mx-auto">
+      <Card>
+        <CardHeader>
+          <CardTitle>Card Title</CardTitle>
+          <CardDescription>Card Description</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Card Content goes here.</p>
+        </CardContent>
+        <CardFooter>
+          <p>Card Footer</p>
+        </CardFooter>
+      </Card>
+    </div>
+    <Accordion items={accordionItems} />
+    <div class="max-w-md mx-auto mt-8">
+      <Card variant="destructive">
+        <CardHeader>
+          <CardTitle>Destructive Card</CardTitle>
+          <CardDescription>This is a destructive card variant</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Destructive card content goes here.</p>
+        </CardContent>
+        <CardFooter>
+          <p>Destructive Card Footer</p>
+        </CardFooter>
+      </Card>
+    </div>
+
+  </main>
+</Layout>
+
+<script>
+  function handleSignOut() {
+    console.log("Sign out clicked");
+    // Add your sign out logic here
+  }
+</script>
