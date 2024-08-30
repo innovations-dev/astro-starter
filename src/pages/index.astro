@@ -1,17 +1,41 @@
 ---
 import Layout from "@/layouts/root-layout.astro";
+import ModularHero from "@/components/hero/modular-hero.astro";
 
 import "../styles/global.css";
-import { Icon } from "astro-icon/components";
 ---
 
 <Layout title="Home">
-  <main class="relative z-0 p-4"></main>
+  <main class="relative z-0">
+    <ModularHero
+      title="Welcome to our website"
+      description="This is a description of our website"
+      layout="rightAligned"
+      ctaText="Get started"
+      ctaHref="/sign-up"
+      imageSrc="/assets/hero-1.jpg"
+      imageAlt="Hero image"
+      imagePosition="background"
+      gradientOverlay={{
+        startColor: "#ff80b5",
+        endColor: "#000000",
+        opacity: 0.25,
+      }}
+    />
+    <ModularHero
+      title="Welcome to our website"
+      description="This is a description of our website"
+      layout="rightAligned"
+      ctaText="Get started"
+      ctaHref="/sign-up"
+      imageSrc="/assets/hero-1.jpg"
+      imageAlt="Hero image"
+      imagePosition="background"
+      gradientOverlay={{
+        startColor: "#ff80b5",
+        endColor: "#000000",
+        opacity: 0.25,
+      }}
+    />
+  </main>
 </Layout>
-
-<script>
-  function handleSignOut() {
-    console.log("Sign out clicked");
-    // Add your sign out logic here
-  }
-</script>

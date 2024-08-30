@@ -13,7 +13,6 @@ import DropdownMenu from "@/components/dropdown-menu.astro";
 import menuItems from "../data/dropdown.json";
 import accordionItems from "../data/accordion.json";
 import carouselItems from "../data/carousel.json";
-import Parallax from "@/components/parallax.astro";
 const colors = [
   '#FF6B6B',
   '#4ECDC4',
@@ -31,26 +30,6 @@ import { Icon } from "astro-icon/components";
   <main class="relative z-0 p-4">d
     
     <Carousel items={carouselItems} className="min-h-screen mb-8" />
-
-
-    <Parallax speed={1.5} direction="left" class="w-full h-64 my-8">
-      <Icon name="lucide:chevron-up" size={100} />
-    </Parallax>
-
-    <p class="instructions">
-      To get started, open the directory <code>src/pages</code> in your project.<br />
-      <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-    </p>
-
-    <Parallax speed={2} direction="up" class="w-full h-48 my-8">
-      <div class="bg-blue-500 w-full h-full flex items-center justify-center text-white text-2xl font-bold">
-        Sliding Parallax Text
-      </div>
-    </Parallax>
-
-    <Parallax speed={1} direction="down" class="w-full h-64 my-8">
-      <img src="/path/to/image2.jpg" alt="Parallax Image 2" class="w-full h-full object-cover" />
-    </Parallax>
 
 
     <DropdownMenu
