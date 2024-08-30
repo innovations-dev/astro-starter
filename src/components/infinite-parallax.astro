@@ -1,0 +1,40 @@
+---
+import { cva, type VariantProps } from "class-variance-authority";
+
+export interface Props extends VariantProps<typeof parallaxVariants> {
+  speed?: 'slower' | 'slow' | 'normal' | 'fast' | 'faster';
+  direction?: 'up' | 'down';
+  class?: string;
+}
+
+const parallaxVariants = cva(
+  "relative overflow-hidden",
+  {
+    variants: {
+      speed: {
+        slower: "[--parallax-speed:10%]",
+        slow: "[--parallax-speed:20%]",
+        normal: "[--parallax-speed:30%]",
+        fast: "[--parallax-speed:40%]",
+        faster: "[--parallax-speed:50%]",
+      },
+      direction: {
+        up: "[--parallax-direction:-1]",
+        down: "[--parallax-direction:1]",
+      },
+    },
+    defaultVariants: {
+      speed: "normal",
+      direction: "up",
+    },
+  }
+);
+
+const { speed, direction, class: className } = Astro.props;
+---
+
+<div class={parallaxVariants({ speed, direction, class: className })}>
+  <div class="relative motion-safe:animate-parallax">
+    <slot />
+  </div>
+</div>

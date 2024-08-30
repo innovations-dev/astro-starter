@@ -1,19 +1,28 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-	theme: {
-		container: {
+  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  theme: {
+    container: {
       center: true,
       padding: "2rem",
       screens: {
         "2xl": "1400px",
       },
     },
-		extend: {
-			colors: {
+    extend: {
+      keyframes: {
+        parallax: {
+          '0%': { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(calc(var(--parallax-direction) * var(--parallax-speed)))' },
+        },
+      },
+      animation: {
+        parallax: "parallax 1s linear infinite alternate",
+      },
+      colors: {
         border: "hsl(var(--border))",
-      input: "hsl(var(--input))",
-      ring: "hsl(var(--ring))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
@@ -50,7 +59,7 @@ export default {
         md: `calc(var(--radius) - 2px)`,
         sm: "calc(var(--radius) - 4px)",
       },
-			transitionTimingFunction: {
+      transitionTimingFunction: {
         cubic: "cubic-bezier(0.645,0.045,0.355,1)",
         "in-sine": "cubic-bezier(0.12, 0, 0.39, 0)",
         "out-sine": "cubic-bezier(0.61, 1, 0.88, 1)",
@@ -79,7 +88,12 @@ export default {
         "in-cubic-gs": "cubic-bezier(0.25, 1, 0.87, 0.85)",
         "out-cubic-gs": "cubic-bezier(0.25, 1, 0.87, 0.85)",
       },
-		},
-	},
+    },
+    variants: {
+      extend: {
+        animation: ["motion-safe"],
+      },
+    },
+  },
   plugins: [require("tailwindcss-animate")],
-}
+};
