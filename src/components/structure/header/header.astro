@@ -1,6 +1,7 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 import { headerVariants, type HeaderProps } from "./header";
+import type { VariantProps } from "class-variance-authority";
 import type { Brand } from "@/schema/brand";
 import type { Link } from "@/schema/link";
 
@@ -13,7 +14,9 @@ import DropdownMenu from "../../dropdown-menu.astro";
 import links from "@/data/header.json";
 import actions from "@/data/auth.json";
 
-interface Props extends HTMLAttributes<"nav"> {}
+interface Props
+  extends VariantProps<typeof headerVariants>,
+    HTMLAttributes<"header"> {}
 
 // get the current path
 const pathname = new URL(Astro.request.url).pathname;
@@ -34,19 +37,15 @@ const _links = links.map((link) => {
     isActive: link.href === currentPath,
   };
 });
-const { title, class: className, ...props } = Astro.props;
+const { title, class: className, variant, ...props } = Astro.props;
 ---
 
 <header
-  class:list={[
-    headerVariants({ variant: "floating" }),
-    "relative",
-    className,
-  ]}
+  class:list={[headerVariants({ variant }), className]}
   {...props}
 >
   <div
-    class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl"
+    class="flex flex-wrap justify-between items-center mx-auto"
   >
     <slot name="page-header-brand">
       <a href={brand[0].data.url} class="flex items-center">
@@ -70,7 +69,7 @@ const { title, class: className, ...props } = Astro.props;
                     href={action.href}
                     class:list={[
                       buttonVariants({ variant: "ghost" }),
-                      "dark:hover:text-black inline-flex rounded",
+                      "dark:hover:text-black text-sm inline-flex rounded",
                     ]}
                   >
                     {action.name}
@@ -132,9 +131,9 @@ const { title, class: className, ...props } = Astro.props;
             _links.length
               ? _links.map((link) => {
                   const linkStyles = [
-                    "text-foreground/60 py-1 px-2 border-2 border-transparent rounded-md",
+                    "text-sm text-foreground/60 py-1 px-2 border-2 border-transparent rounded-md",
                     {
-                      "bg-foreground/30 text-background text-underline px-2 rounded-md cursor-auto":
+                      "bg-foreground/10 text-background text-underline px-2 rounded-md cursor-auto":
                         link.isActive,
                     },
                     {
@@ -144,7 +143,7 @@ const { title, class: className, ...props } = Astro.props;
                   ];
                   if (link.subs) {
                     return (
-                      <li class:list={["mt-2", ...linkStyles]}>
+                      <li class:list={["mt-2 text-sm", ...linkStyles]}>
                         <DropdownMenu
                           trigger={link.name}
                           items={link.subs}
@@ -158,7 +157,7 @@ const { title, class: className, ...props } = Astro.props;
                       <a
                         href={link.href}
                         class:list={[
-                          "block py-2 rounded border-b border-gray-100 lg:border-0 dark:border-gray-700",
+                          "text-sm block py-2 rounded border-b border-gray-100 lg:border-0 dark:border-gray-700",
                         ]}
                         aria-current={link.isActive ? "page" : undefined}
                       >
