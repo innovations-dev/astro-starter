@@ -1,0 +1,124 @@
+---
+import { cva, type VariantProps } from "class-variance-authority";
+import { buttonVariants } from "../button/button";
+import { Icon } from "astro-icon/components";
+import Parallax from "../parallax.astro";
+
+export interface Props extends VariantProps<typeof heroVariants> {
+  title: string;
+  description?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  gradientOverlay?: {
+    startColor: string;
+    endColor: string;
+    opacity?: number;
+  };
+}
+
+const heroVariants = cva("w-full min-h-[calc(100dvh)] flex items-center", {
+  variants: {
+    layout: {
+      centered: "text-center justify-center",
+      leftAligned: "text-left justify-start",
+      rightAligned: "text-right justify-end",
+    },
+    imagePosition: {
+      none: "",
+      left: "flex-col md:flex-row",
+      right: "flex-col md:flex-row-reverse",
+      background: "relative bg-cover bg-center bg-no-repeat",
+    },
+    theme: {
+      light: "bg-white text-gray-900",
+      dark: "bg-gray-900 text-white",
+    },
+  },
+  defaultVariants: {
+    layout: "centered",
+    imagePosition: "none",
+    theme: "light",
+  },
+});
+
+const {
+  title,
+  description,
+  ctaText,
+  ctaHref,
+  imageSrc,
+  imageAlt,
+  layout = "centered",
+  imagePosition = "none",
+  theme = "light",
+  gradientOverlay,
+} = Astro.props;
+
+const sectionStyle =
+  imageSrc && imagePosition === "background"
+    ? `background-image: url('${imageSrc}');`
+    : "";
+---
+
+<section
+  class:list={[heroVariants({ layout, imagePosition, theme })]}
+  style={sectionStyle}
+>
+  {
+    gradientOverlay && (
+      <div
+        class={`absolute inset-0 bg-gradient-to-br from-[${gradientOverlay.startColor}] to-[${gradientOverlay.endColor}] opacity-${gradientOverlay.opacity || 20}`}
+      />
+    )
+  }
+  <div
+    class={`w-full ${imagePosition === "left" || imagePosition === "right" ? "md:w-1/2 md:px-8" : ""} ${imagePosition === "background" ? "relative z-10" : ""}`}
+  >
+    {
+      (imagePosition === "left" || imagePosition === "right") && imageSrc && (
+        <div class="w-full md:w-1/2 mb-8 md:mb-0">
+          <img
+            src={imageSrc}
+            alt={imageAlt}
+            class="w-full h-auto object-cover rounded-lg shadow-lg"
+          />
+        </div>
+      )
+    }
+
+    <div
+      class={`container mx-auto flex flex-col ${layout === "centered" ? "items-center" : layout === "leftAligned" ? "items-start" : "items-end"}`}
+    >
+      <h1
+        class={`text-4xl md:text-5xl lg:text-6xl font-bold mb-4 ${layout === "centered" ? "text-center" : layout === "leftAligned" ? "text-left" : "text-right"}`}
+      >
+        {title}
+      </h1>
+      {
+        description && (
+          <p
+            class={`text-xl md:text-2xl mb-8 ${layout === "centered" ? "text-center" : layout === "leftAligned" ? "text-left" : "text-right"}`}
+          >
+            {description}
+          </p>
+        )
+      }
+      {
+        ctaText && ctaHref && (
+          <a href={ctaHref} class={buttonVariants({ variant: "default" })}>
+            {ctaText}
+          </a>
+        )
+      }
+        <div
+        class="bg-scroll bg-bottom bg-no-repeat bg-cover w-full h-screen overflow-y-scroll"
+        >
+        <Parallax>
+          <Icon name="astro-icon" size={100} />
+        </Parallax>
+      </div>
+    </div>
+  </div>
+</section>
