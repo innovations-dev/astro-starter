@@ -19,7 +19,7 @@ export const buttonVariants = cva("button", {
       link: "text-primary underline-offset-4 hover:underline",
       icon: "py-2 px-1 rounded-full bg-gray-200 dark:bg-gray-600",
       "icon-ghost":
-        "py-2 px-1 rounded-full bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500",
+        "py-2 px-1 rounded-full bg-gray-600/10 text-black dark:text-white hover:bg-gray-30/100 dark:hover:bg-gray-500/10",
     },
     size: {
       sm: "h-9 rounded-md px-3",
