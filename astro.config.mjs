@@ -1,6 +1,7 @@
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
+import site from "./src/data/site.json";
 
 import icon from "astro-icon";
 
@@ -8,12 +9,27 @@ import robotsTxt from "astro-robots-txt";
 
 // https://astro.build/config
 export default defineConfig({
+  site: site.url,
   output: "hybrid",
   integrations: [
     tailwind(),
-    sitemap(),
+    sitemap({
+      // https://github.com/alextim/astro-lib/tree/main/packages/astro-sitemap#readme
+      lastmod: Date(),
+      lastmodDateOnly: true,
+      exclude: [
+        "/404",
+        "/signin",
+        "/signup",
+        "/reset-password",
+        "/forgot-password",
+        "/dashboard",
+        "/admin"
+      ]
+    }),
     icon(),
     robotsTxt({
+      // https://github.com/alextim/astro-lib/tree/main/packages/astro-robots-txt#readme
       sitemap: true,
       sitemapBaseFileName: "sitemap-index",
       host: "https://momentuminnovations.com",
