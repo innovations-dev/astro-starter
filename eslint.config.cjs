@@ -1,9 +1,9 @@
 const eslintPluginAstro = require("eslint-plugin-astro");
-
+// https://r44j.dev/blog/beginner-s-guide-to-setting-up-astro-astro-prettier-eslint-tailwind-css/
 module.exports = {
   extends: [
     "plugin:astro/recommended",
-    "plugin:jsx-a11y/strict",
+    "plugin:jsx-a11y/recommended",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended"
   ],

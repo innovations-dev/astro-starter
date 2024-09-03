@@ -1,0 +1,9 @@
+{
+  "title": "Site title",
+  "type": "website",
+  "description": "Site description",
+  "url": "https://site.com",
+  "image": "/og-image.png",
+  "locale": "en_US",
+  "siteName": "Site name"
+}
