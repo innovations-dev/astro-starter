@@ -48,5 +48,30 @@
   ],
   "locale": "en_US",
   "video": "/video.mp4",
-  "siteName": "Site name"
+  "siteName": "Momentum Innovations",
+  "logo": "https://momentuminnovations.com/assets/logo.svg",
+  "telephone": "123-456-7890",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1234 Main St",
+    "addressLocality": "Anytown",
+    "addressRegion": "Anystate",
+    "postalCode": "12345",
+    "addressCountry": {
+      "@type": "Country",
+      "name": "US"
+    }
+  },
+  "location": {
+    "@type": "PostalAddress",
+    "streetAddress": "1234 Main St",
+    "addressLocality": "Anytown",
+    "addressRegion": "Anystate",
+    "postalCode": "12345",
+    "telephone": "123-456-7890",
+    "addressCountry": {
+      "@type": "Country",
+      "name": "US"
+    }
+  }
 }

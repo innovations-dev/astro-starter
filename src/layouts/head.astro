@@ -1,6 +1,7 @@
 ---
 import seo from "@/data/site.json";
 import { SEO } from "astro-seo";
+import { Schema } from "astro-seo-schema";
 
 interface SEOLink {
   rel: string;
@@ -12,6 +13,31 @@ interface SEOMeta {
   name: string;
   content: string;
   media?: string;
+}
+
+interface SchemaAddress {
+  "@type": string;
+  streetAddress: string;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode: string;
+  addressCountry: {
+    "@type": string;
+    name: string;
+  };
+}
+
+interface SchemaLocation {
+  "@type": string;
+  streetAddress: string;
+  addressLocality: string;
+  addressRegion: string;
+  postalCode: string;
+  telephone: string;
+  addressCountry: {
+    "@type": string;
+    name: string;
+  };
 }
 
 export interface HeadProps {
@@ -32,6 +58,9 @@ export interface HeadProps {
   url: string;
   locale: string;
   siteName: string;
+  telephone: string;
+  address: SchemaAddress;
+  location: SchemaLocation;
 }
 
 interface Props extends HeadProps {}
@@ -46,7 +75,10 @@ const {
   links,
   locale,
   meta,
-  siteName
+  siteName,
+  telephone,
+  address,
+  location
 } = Astro.props;
 ---
 
@@ -82,6 +114,27 @@ const {
         ...seo.meta,
         ...meta
       ]
+    }}
+  />
+  <Schema
+    item={{
+      "@context": "https://schema.org",
+      "@id": seo.url || url,
+      "@type": "Corporation",
+      name: seo.siteName || siteName,
+      logo: "https://placehold.co/1200x630",
+      telephone: seo.telephone || telephone,
+      priceRange: "N/A",
+      url: seo.url || url,
+      image: seo.image.url || image.url,
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: seo.telephone || telephone,
+        contactType: "technical support",
+        areaServed:
+          seo.address.addressCountry.name || address.addressCountry.name,
+        availableLanguage: [seo.locale || locale]
+      }
     }}
   />
 </head>
