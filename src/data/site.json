@@ -2,8 +2,51 @@
   "title": "Site title",
   "type": "website",
   "description": "Site description",
+  "keywords": "keyword1, keyword2, keyword3",
   "url": "https://site.com",
-  "image": "/og-image.png",
+  "image": {
+    "url": "/og-image.png",
+    "width": 1200,
+    "height": 630,
+    "type": "image/png",
+    "alt": "Site image",
+    "secureUrl": "https://site.com/og-image.png"
+  },
+  "article": {
+    "publishedTime": "2024-01-01T00:00:00.000Z",
+    "modifiedTime": "2024-01-01T00:00:00.000Z",
+    "authors": ["Author 1"],
+    "section": "Section 1",
+    "tags": ["Tag 1", "Tag 2"]
+  },
+  "links": [
+    {
+      "rel": "icon",
+      "href": "/favicon.svg",
+      "type": "image/svg+xml"
+    }
+  ],
+  "meta": [
+    {
+      "name": "viewport",
+      "content": "width=device-width, initial-scale=1"
+    },
+    {
+      "name": "color-scheme",
+      "content": "dark light"
+    },
+    {
+      "name": "theme-color",
+      "media": "(prefers-color-scheme: dark)",
+      "content": "#000"
+    },
+    {
+      "name": "theme-color",
+      "media": "(prefers-color-scheme: light)",
+      "content": "#fff"
+    }
+  ],
   "locale": "en_US",
+  "video": "/video.mp4",
   "siteName": "Site name"
 }

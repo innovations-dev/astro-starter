@@ -1,0 +1,87 @@
+---
+import seo from "@/data/site.json";
+import { SEO } from "astro-seo";
+
+interface SEOLink {
+  rel: string;
+  href: string;
+  type?: string;
+}
+
+interface SEOMeta {
+  name: string;
+  content: string;
+  media?: string;
+}
+
+export interface HeadProps {
+  title: string;
+  type: string;
+  description: string;
+  keywords: string;
+  image: {
+    url: string;
+    secureUrl?: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+    type?: string;
+  };
+  links: SEOLink[];
+  meta: SEOMeta[];
+  url: string;
+  locale: string;
+  siteName: string;
+}
+
+interface Props extends HeadProps {}
+
+const {
+  title,
+  type,
+  description,
+  url,
+  image,
+  keywords,
+  links,
+  locale,
+  meta,
+  siteName
+} = Astro.props;
+---
+
+<head>
+  <SEO
+    titleTemplate={`%s | ${seo.siteName || siteName}`}
+    title={seo.title || title}
+    charset="UTF-8"
+    description={seo.description || description}
+    openGraph={{
+      basic: {
+        title: seo.title || title,
+        type: seo.type || type,
+        url: seo.url || url,
+        image: seo.image.url || image.url
+      },
+      image: seo.image || image,
+      optional: {
+        description: seo.description || description,
+        locale: seo.locale || locale,
+        siteName: seo.siteName || siteName
+      }
+    }}
+    extend={{
+      link: seo.links || links,
+      meta: [
+        { name: "description", content: seo.description || description },
+        { name: "generator", content: Astro.generator },
+        {
+          name: "keywords",
+          content: seo.keywords || keywords
+        },
+        ...seo.meta,
+        ...meta
+      ]
+    }}
+  />
+</head>
