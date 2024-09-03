@@ -1,19 +1,35 @@
 ---
-import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  speed?: number;
+  percentage?: number;
+  zIndex?: number;
+}
+
+const {
+  speed = 5,
+  percentage = 0,
+  zIndex = 0,
+  class: className,
+  ...props
+} = Astro.props;
 ---
 
 <div
-  class="m-0 p-0 h-full overflow-y-scroll overflow-x-hidden"
-  style="perspective: 1px; transform: translate3d(0, 0, 0); transform-style: preserve-3d; transform-origin: top center; transition: transform 0.5s ease-in-out;"
+  class:list={["rellax overflow-y-hidden", className]}
+  data-rellax-speed={speed}
+  data-rellax-percentage={percentage}
+  data-rellax-zindex={zIndex}
+  {...props}
 >
-  <div
-    class="relative py-24 px-8 min-h-full w-full box-border shadow-md before:content-[''] before:absolute before:inset-0 before:bg-cover before:bg-center before:bg-no-repeat before:z-[-1]"
-    style="transform-style: inherit;"
-  >
-    <div
-      class="absolute top-1/2 left-1/3 translate-z-[0.25px] translate-x-[94%] translate-y-[-100%] rotate(2deg) p-2 background-red-200 bg-cover bg-center bg-no-repeat z-[1]"
-    >
-      <slot/>
-    </div>
-  </div>
+  <slot />
 </div>
+
+<script>
+  import Rellax from "rellax";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const rellax = new Rellax(".rellax");
+  });
+</script>
