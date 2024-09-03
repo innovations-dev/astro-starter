@@ -12,11 +12,14 @@ const currentPath = pathname.length > 1 ? pathname.slice(1) : pathname; // remov
 
 // get the brand
 const brand: Brand[] = await getCollection("brand");
-
 ---
 
-<footer class="fixed bottom-0 left-0 right-0 container max-w-screen-lg mx-auto rounded-lg shadow m-4 border-t-foreground/20 border-[0.5px]">
-  <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+<footer
+  class="fixed bottom-0 left-0 right-0 container max-w-screen-lg mx-auto rounded-lg shadow-[5px_5px_10px_-5px_foreground] backdrop-blur-md m-4 border-foreground/20 border-[0.5px] text-muted"
+>
+  <div
+    class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between"
+  >
     <slot name="footer-brand">
       <span class="text-sm sm:text-center">
         © {new Date().getFullYear()}
@@ -25,16 +28,20 @@ const brand: Brand[] = await getCollection("brand");
         </a>- All Rights Reserved.
       </span>
     </slot>
-  <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-    <slot>
-      {links.map((link: Link) => {
-        return (
-          <li>
-            <a href={link.href} class="hover:underline me-4 md:me-6">{link.name}</a>
-          </li>
-        )
-      })}
-    </slot>
-  </ul>
+    <ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
+      <slot>
+        {
+          links.map((link: Link) => {
+            return (
+              <li>
+                <a href={link.href} class="hover:underline me-4 md:me-6">
+                  {link.name}
+                </a>
+              </li>
+            );
+          })
+        }
+      </slot>
+    </ul>
   </div>
 </footer>

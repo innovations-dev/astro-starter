@@ -41,12 +41,17 @@ const { title, class: className, variant, ...props } = Astro.props;
 ---
 
 <header
-  class:list={[headerVariants({ variant }), className]}
+  class:list={[
+    headerVariants({ variant }),
+    "transition-transform duration-300 ease-in-cubic-gs",
+    "[data-state=hidden]:translate-y-[-100%] data-state=visible]:translate-y-0",
+    "border-3 [data-state=hidden]:border-red-500 [data-state=show]:border-blue-500",
+    className,
+  ]}
+  data-state="visible"
   {...props}
 >
-  <div
-    class="flex flex-wrap justify-between items-center mx-auto"
-  >
+  <div class="flex flex-wrap justify-between items-center mx-auto">
     <slot name="page-header-brand">
       <a href={brand[0].data.url} class="flex items-center">
         {
@@ -213,4 +218,29 @@ const { title, class: className, variant, ...props } = Astro.props;
       setupMobileMenu();
     }
   });
+
+  let lastScrollY = window.scrollY;
+
+  function handleScroll() {
+    const header = document.querySelector(".header");
+    if (!header) return;
+
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY > lastScrollY) {
+      // Scrolling down
+      // header.classList.toggle("hidden");
+      (header as HTMLElement).dataset.state = "hidden";
+      // (header as HTMLElement).style.transform = "translateY(-115%)";
+    } else {
+      // Scrolling up
+      // header.classList.toggle("hidden");
+      (header as HTMLElement).dataset.state = "show";
+      // (header as HTMLElement).style.transform = "translateY(0)";
+    }
+
+    lastScrollY = currentScrollY;
+  }
+
+  window.addEventListener("scroll", handleScroll);
 </script>
