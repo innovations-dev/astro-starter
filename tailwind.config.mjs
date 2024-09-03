@@ -12,12 +12,25 @@ export default {
     extend: {
       keyframes: {
         parallax: {
-          '0%': { transform: 'translateY(0)' },
-          '100%': { transform: 'translateY(calc(var(--parallax-direction) * var(--parallax-speed)))' },
+          "0%": { transform: "translateY(0)" },
+          "100%": {
+            transform:
+              "translateY(calc(var(--parallax-direction) * var(--parallax-speed)))",
+          },
+        },
+        "slide-from-bottom": {
+          "0%": { transform: "translateY(100%)" },
+          "100%": { transform: "translateY(0)" },
         },
       },
       animation: {
         parallax: "parallax 1s linear infinite alternate",
+        "slide-from-bottom": "slide-from-bottom 1s ease-in-cubic-gs",
+      },
+      textShadow: {
+        sm: "0 1px 2px var(--tw-shadow-color)",
+        DEFAULT: "0 2px 4px var(--tw-shadow-color)",
+        lg: "0 8px 16px var(--tw-shadow-color)",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -95,5 +108,8 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@adam.plesnik/tailwindcss-scroll-driven-animations"),
+  ],
 };
