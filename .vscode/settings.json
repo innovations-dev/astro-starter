@@ -9,5 +9,11 @@
     "typescript",
     "typescriptreact"
   ],
-  
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+  "prettier.documentSelectors": ["**/*.svg", "**/*.astro"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
