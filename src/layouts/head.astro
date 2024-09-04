@@ -113,8 +113,8 @@ const {
           name: "keywords",
           content: seo.keywords || keywords
         },
-        ...seo.meta,
-        ...meta
+        ...(Array.isArray(seo.meta) ? seo.meta : []),
+        ...(Array.isArray(meta) ? meta : [])
       ]
     }}
   />
