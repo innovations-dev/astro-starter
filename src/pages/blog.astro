@@ -1,6 +1,6 @@
 ---
-import Layout from '@/layouts/root-layout.astro';
-import Pagination from '@/components/pagination.astro';
+import Pagination from "@/components/pagination.astro";
+import Layout from "@/layouts/root-layout.astro";
 
 // Simulate fetching blog posts
 const totalPosts = 50;
@@ -18,22 +18,24 @@ const endIndex = startIndex + postsPerPage;
 // Generate dummy post titles
 const posts = Array.from({ length: postsPerPage }, (_, i) => ({
   id: startIndex + i + 1,
-  title: `Blog Post ${startIndex + i + 1}`,
+  title: `Blog Post ${startIndex + i + 1}`
 }));
 ---
 
 <Layout title="Blog Posts">
   <main class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-6">Blog Posts</h1>
-    
-    <ul class="space-y-4 mb-8">
-      {posts.map((post) => (
-        <li class="bg-white shadow rounded-lg p-4">
-          <h2 class="text-xl font-semibold">{post.title}</h2>
-        </li>
-      ))}
+    <h1 class="mb-6 text-3xl font-bold">Blog Posts</h1>
+
+    <ul class="mb-8 space-y-4">
+      {
+        posts.map((post) => (
+          <li class="rounded-lg bg-white p-4 shadow">
+            <h2 class="text-xl font-semibold">{post.title}</h2>
+          </li>
+        ))
+      }
     </ul>
-    
+
     <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/blog" showCount={2} />
   </main>
 </Layout>
