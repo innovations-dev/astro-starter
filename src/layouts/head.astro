@@ -43,11 +43,11 @@ interface SchemaLocation {
 }
 
 export interface HeadProps {
-  title: string;
-  type: string;
-  description: string;
-  keywords: string;
-  image: {
+  title?: string;
+  type?: string;
+  description?: string;
+  keywords?: string;
+  image?: {
     url: string;
     secureUrl?: string;
     alt?: string;
@@ -55,14 +55,14 @@ export interface HeadProps {
     height?: number;
     type?: string;
   };
-  links: SEOLink[];
-  meta: SEOMeta[];
-  url: string;
-  locale: string;
-  siteName: string;
-  telephone: string;
-  address: SchemaAddress;
-  location: SchemaLocation;
+  links?: SEOLink[];
+  meta?: SEOMeta[];
+  url?: string;
+  locale?: string;
+  siteName?: string;
+  telephone?: string;
+  address?: SchemaAddress;
+  location?: SchemaLocation;
 }
 
 interface Props extends HeadProps {}
@@ -92,10 +92,10 @@ const {
     description={seo.description || description}
     openGraph={{
       basic: {
-        title: seo.title || title,
-        type: seo.type || type,
-        url: seo.url || url,
-        image: seo.image.url || image.url
+        title: seo.title || title || "",
+        type: seo.type || type || "",
+        url: seo.url || url || "",
+        image: seo.image.url || image?.url || ""
       },
       image: seo.image || image,
       optional: {
@@ -128,14 +128,14 @@ const {
       telephone: seo.telephone || telephone,
       priceRange: "N/A",
       url: seo.url || url,
-      image: seo.image.url || image.url,
+      image: seo.image.url || image?.url || "",
       contactPoint: {
         "@type": "ContactPoint",
         telephone: seo.telephone || telephone,
         contactType: "technical support",
         areaServed:
-          seo.address.addressCountry.name || address.addressCountry.name,
-        availableLanguage: [seo.locale || locale]
+          seo.address?.addressCountry.name || address?.addressCountry.name,
+        availableLanguage: [seo.locale || locale || "en"]
       }
     }}
   />
