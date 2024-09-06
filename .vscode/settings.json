@@ -2,17 +2,15 @@
   "files.associations": {
     "*.css": "tailwindcss"
   },
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "astro",
-    "typescript",
-    "typescriptreact"
-  ],
+  "eslint.validate": ["javascript", "javascriptreact", "astro", "typescript", "typescriptreact"],
   "files.autoSave": "onFocusChange",
   "editor.formatOnSave": true,
+
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
+  },
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
   },
   "prettier.documentSelectors": ["**/*.svg", "**/*.astro"],
   "editor.defaultFormatter": "esbenp.prettier-vscode"

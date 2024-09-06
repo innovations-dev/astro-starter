@@ -1,5 +1,8 @@
 {
   "trailingComma": "none",
+  "tabWidth": 2,
+  "useEditorConfig": true,
+  "printWidth": 120,
   "overrides": [
     {
       "files": "*.svg",
