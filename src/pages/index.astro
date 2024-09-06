@@ -1,7 +1,8 @@
 ---
-import Layout from "@/layouts/root-layout.astro";
 import ModularHero from "@/components/hero/modular-hero.astro";
+import Layout from "@/layouts/root-layout.astro";
 
+import ContactForm from "@/components/contact-form.astro";
 import "../styles/global.css";
 ---
 
@@ -19,9 +20,11 @@ import "../styles/global.css";
       gradientOverlay={{
         startColor: "#ff80b5",
         endColor: "#000000",
-        opacity: 0.25,
+        opacity: 0.25
       }}
     />
-    <section class="container mx-auto h-[calc(200vh-100px)]"></section>
+    <section class="container mx-auto h-[calc(200vh-100px)]">
+      <ContactForm />
+    </section>
   </main>
 </Layout>

@@ -1,3 +1,4 @@
+import node from "@astrojs/node";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
@@ -11,6 +12,9 @@ import robotsTxt from "astro-robots-txt";
 export default defineConfig({
   site: site.url,
   output: "hybrid",
+  adapter: node({
+    mode: "standalone"
+  }),
   integrations: [
     tailwind(),
     sitemap({
@@ -55,6 +59,7 @@ export default defineConfig({
     })
   ],
   vite: {
+    envPrefix: "PUBLIC_",
     ssr: {
       noExternal: ["embla-carousel"]
     }
