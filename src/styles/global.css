@@ -88,7 +88,7 @@
 @layer base {
   * {
     /* min-w-0 prevents flex element overflow issue  */
-    @apply min-w-0 border-border;
+    @apply m-0 box-border min-w-0 border-border p-0;
     transition: color cubic-bezier(0.645, 0.045, 0.355, 1) 0.15s background-color cubic-bezier(0.645, 0.045, 0.355, 1)
       0.15s;
   }
