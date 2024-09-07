@@ -1,28 +1,45 @@
 ---
+import Input from "@/components/input.astro";
+import Textarea from "@/components/textarea.astro";
+import Button from "@/components/button/button.astro";
+import Label from "@/components/label.astro";
+import Select from "@/components/select/select.astro";
 
+const options = [
+  { value: "option1", label: "Option 1" },
+  { value: "option2", label: "Option 2" },
+  { value: "option3", label: "Option 3" }
+];
 ---
 
-<form id="contact-form" action="/api/submit-form" method="POST">
+<form
+  id="contact-form"
+  action="/api/submit-form"
+  method="POST"
+  class="mx-auto my-12 flex w-1/2 flex-col gap-4 rounded-md border-2 border-muted-foreground p-12"
+>
   <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required />
+    <Label for="name">Name:</Label>
+    <Input type="text" id="name" name="name" required />
   </div>
   <div>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required />
+    <Label for="email">Email:</Label>
+    <Input type="email" id="email" name="email" required />
   </div>
   <div>
-    <label for="message">Message:</label>
-    <textarea id="message" name="message" required></textarea>
+    <Label for="message">Message:</Label>
+    <Textarea id="message" name="message" required />
   </div>
-  <button type="submit">Send</button>
+  <div>
+    <Label for="select">Select:</Label>
+    <Select options={options} name="example-select" label="Choose an option" defaultValue="option2" size="default" />
+  </div>
+  <Button type="submit" label="send" class="ml-auto max-w-24">Send</Button>
   <p id="form-status" aria-live="polite"></p>
 </form>
 
 <script>
-  const form = document.getElementById(
-    "contact-form"
-  ) as HTMLFormElement | null;
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
   const formStatus = document.getElementById("form-status");
 
   if (form && formStatus) {

@@ -1,0 +1,11 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"div">;
+
+const { class: className, ...props } = Astro.props;
+---
+
+<div class:list={["py-1.5 pl-8 pr-2 text-sm font-semibold", className]} {...props}>
+  <slot />
+</div>
