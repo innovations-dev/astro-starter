@@ -4,6 +4,7 @@
 import seo from "@/data/site.json";
 import { SEO } from "astro-seo";
 import { Schema } from "astro-seo-schema";
+import { Tooltips } from "astro-tooltips";
 
 interface SEOLink {
   rel: string;
@@ -67,21 +68,8 @@ export interface HeadProps {
 
 interface Props extends HeadProps {}
 
-const {
-  title,
-  type,
-  description,
-  url,
-  image,
-  keywords,
-  links,
-  locale,
-  meta,
-  siteName,
-  telephone,
-  address,
-  location
-} = Astro.props;
+const { title, type, description, url, image, keywords, links, locale, meta, siteName, telephone, address, location } =
+  Astro.props;
 ---
 
 <head>
@@ -133,10 +121,10 @@ const {
         "@type": "ContactPoint",
         telephone: seo.telephone || telephone,
         contactType: "technical support",
-        areaServed:
-          seo.address?.addressCountry.name || address?.addressCountry.name,
+        areaServed: seo.address?.addressCountry.name || address?.addressCountry.name,
         availableLanguage: [seo.locale || locale || "en"]
       }
     }}
   />
+  <Tooltips interactive={false} delay={[15, 14000]} />
 </head>

@@ -63,8 +63,8 @@
   * {
     /* min-w-0 prevents flex element overflow issue  */
     @apply min-w-0 border-border;
-    transition: color cubic-bezier(0.645, 0.045, 0.355, 1) 0.15s
-      background-color cubic-bezier(0.645, 0.045, 0.355, 1) 0.15s;
+    transition: color cubic-bezier(0.645, 0.045, 0.355, 1) 0.15s background-color cubic-bezier(0.645, 0.045, 0.355, 1)
+      0.15s;
   }
 
   html,
@@ -86,5 +86,16 @@
       Bitstream Vera Sans Mono,
       Courier New,
       monospace;
+  }
+}
+
+@layer utilities {
+  .tippy-box[data-theme="default"] {
+    background-color: var(--vscode-menu-background);
+    color: var(--vscode-badge-foreground);
+    border: 1px solid var(--vscode-editorWidget-border);
+    border-radius: 0.15rem;
+    padding: 0.5rem;
+    word-wrap: break-word;
   }
 }
