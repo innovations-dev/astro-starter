@@ -12,10 +12,8 @@ export function initializeSelects() {
     let isOpen = false;
 
     function showContent() {
-      requestAnimationFrame(() => {
-        content.style.visibility = "visible";
-        content.style.opacity = "1";
-      });
+      content.style.visibility = "visible";
+      content.style.opacity = "1";
       trigger.setAttribute("aria-expanded", "true");
       trigger.classList.add("bg-gray-100");
       isOpen = true;
@@ -23,18 +21,15 @@ export function initializeSelects() {
         0,
         items.findIndex((item) => item.getAttribute("aria-selected") === "true")
       );
-      focusItem(currentFocusIndex);
+      highlightItem(currentFocusIndex);
     }
 
     function hideContent() {
-      requestAnimationFrame(() => {
-        content.style.visibility = "hidden";
-        content.style.opacity = "0";
-      });
+      content.style.visibility = "hidden";
+      content.style.opacity = "0";
       trigger.setAttribute("aria-expanded", "false");
       trigger.classList.remove("bg-gray-100");
       isOpen = false;
-      trigger.focus();
     }
 
     function selectItem(item: HTMLElement) {
@@ -51,74 +46,85 @@ export function initializeSelects() {
       }
     }
 
-    function focusItem(index: number) {
+    function highlightItem(index: number) {
       items.forEach((item, i) => {
         item.classList.toggle("bg-indigo-100", i === index);
-        if (i === index) {
-          item.focus();
-          item.scrollIntoView({ block: "nearest" });
-        }
       });
+      if (isOpen) {
+        items[index].scrollIntoView({ block: "nearest" });
+      }
     }
 
     function handleKeyDown(e: KeyboardEvent) {
-      if (!isOpen) {
-        if (["ArrowDown", "ArrowUp", "Enter", " "].includes(e.key)) {
-          e.preventDefault();
-          showContent();
+      if (isOpen) {
+        switch (e.key) {
+          case "ArrowDown":
+          case "ArrowUp":
+            e.preventDefault();
+            currentFocusIndex = (currentFocusIndex + (e.key === "ArrowDown" ? 1 : -1) + items.length) % items.length;
+            highlightItem(currentFocusIndex);
+            break;
+          case "Home":
+            e.preventDefault();
+            currentFocusIndex = 0;
+            highlightItem(currentFocusIndex);
+            break;
+          case "End":
+            e.preventDefault();
+            currentFocusIndex = items.length - 1;
+            highlightItem(currentFocusIndex);
+            break;
+          case "Escape":
+            e.preventDefault();
+            hideContent();
+            trigger.focus();
+            break;
+          case "Enter":
+          case " ":
+            e.preventDefault();
+            selectItem(items[currentFocusIndex]);
+            trigger.focus();
+            break;
         }
-        return;
-      }
-
-      switch (e.key) {
-        case "ArrowDown":
-        case "ArrowUp":
-          e.preventDefault();
-          currentFocusIndex = (currentFocusIndex + (e.key === "ArrowDown" ? 1 : -1) + items.length) % items.length;
-          focusItem(currentFocusIndex);
-          break;
-        case "Home":
-        case "End":
-          e.preventDefault();
-          currentFocusIndex = e.key === "Home" ? 0 : items.length - 1;
-          focusItem(currentFocusIndex);
-          break;
-        case "Escape":
-          e.preventDefault();
-          hideContent();
-          break;
-        case "Enter":
-        case " ":
-          e.preventDefault();
-          selectItem(items[currentFocusIndex]);
-          break;
+      } else {
+        switch (e.key) {
+          case "ArrowDown":
+          case "ArrowUp":
+          case "Enter":
+          case " ":
+            e.preventDefault();
+            showContent();
+            break;
+        }
       }
     }
 
-    selectContainer.addEventListener("click", (e) => {
-      const target = e.target as HTMLElement;
-      if (target === trigger || trigger.contains(target)) {
-        e.preventDefault();
-        isOpen ? hideContent() : showContent();
-      } else if (target.hasAttribute("data-select-item")) {
-        selectItem(target);
-      }
+    trigger.addEventListener("click", (e) => {
+      e.preventDefault();
+      isOpen ? hideContent() : showContent();
     });
 
-    content.addEventListener("mousemove", (e) => {
+    content.addEventListener("click", (e) => {
       const target = e.target as HTMLElement;
       if (target.hasAttribute("data-select-item")) {
-        currentFocusIndex = items.indexOf(target);
-        focusItem(currentFocusIndex);
+        selectItem(target);
+        trigger.focus();
       }
     });
 
-    (selectContainer as HTMLElement).addEventListener("keydown", handleKeyDown);
+    items.forEach((item, index) => {
+      item.addEventListener("mouseenter", () => {
+        currentFocusIndex = index;
+        highlightItem(currentFocusIndex);
+      });
+    });
 
     document.addEventListener("click", (e) => {
       if (!selectContainer.contains(e.target as Node)) {
         hideContent();
       }
     });
+
+    (selectContainer as HTMLElement).addEventListener("keydown", handleKeyDown);
   });
 }
