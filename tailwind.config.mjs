@@ -21,11 +21,21 @@ export default {
         "slide-from-bottom": {
           "0%": { transform: "translateY(100%)" },
           "100%": { transform: "translateY(0)" }
+        },
+        marquee: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-100%)" }
+        },
+        marquee2: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0%)" }
         }
       },
       animation: {
         parallax: "parallax 1s linear infinite alternate",
-        "slide-from-bottom": "slide-from-bottom 1s ease-in-cubic-gs"
+        "slide-from-bottom": "slide-from-bottom 1s ease-in-cubic-gs",
+        marquee: "marquee 30s linear infinite",
+        marquee2: "marquee2 30s linear infinite"
       },
       textShadow: {
         sm: "0 1px 2px var(--tw-shadow-color)",
