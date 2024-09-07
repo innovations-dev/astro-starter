@@ -9,14 +9,12 @@ import { Icon } from "astro-icon/components";
 import { getCollection } from "astro:content";
 
 import { buttonVariants } from "../../button/button";
-import DarkModeSwitch from "../../theme/dark-mode-switch.astro";
+import ThemeSwitch from "../../theme/theme-switch.astro";
 import DropdownMenu from "../../dropdown-menu.astro";
 import links from "@/data/header.json";
 import actions from "@/data/auth.json";
 
-interface Props
-  extends VariantProps<typeof headerVariants>,
-    HTMLAttributes<"header"> {}
+interface Props extends VariantProps<typeof headerVariants>, HTMLAttributes<"header"> {}
 
 // get the current path
 const pathname = new URL(Astro.request.url).pathname;
@@ -29,12 +27,12 @@ const _links = links.map((link) => {
   if (link.subs) {
     return {
       ...link,
-      isActive: link.subs.some((sub) => sub.href === currentPath),
+      isActive: link.subs.some((sub) => sub.href === currentPath)
     };
   }
   return {
     ...link,
-    isActive: link.href === currentPath,
+    isActive: link.href === currentPath
   };
 });
 const { title, class: className, variant, ...props } = Astro.props;
@@ -46,25 +44,19 @@ const { title, class: className, variant, ...props } = Astro.props;
     "transition-transform duration-300 ease-in-cubic-gs",
     "[data-state=hidden]:translate-y-[-100%] data-state=visible]:translate-y-0",
     "border-3 [data-state=hidden]:border-red-500 [data-state=show]:border-blue-500",
-    className,
+    className
   ]}
   data-state="visible"
   {...props}
 >
-  <div class="flex flex-wrap justify-between items-center mx-auto">
+  <div class="mx-auto flex flex-wrap items-center justify-between">
     <slot name="page-header-brand">
       <a href={brand[0].data.url} class="flex items-center">
-        {
-          brand[0].data.icon ? (
-            <Icon name={brand[0].data.icon} class="w-10 h-10 mr-3" />
-          ) : null
-        }
-        <span class="self-center text-xl font-semibold whitespace-nowrap"
-          >{brand[0].data.name}</span
-        >
+        {brand[0].data.icon ? <Icon name={brand[0].data.icon} class="mr-3 h-10 w-10" /> : null}
+        <span class="self-center whitespace-nowrap text-xl font-semibold">{brand[0].data.name}</span>
       </a>
     </slot>
-    <div class="flex items-center lg:order-2 gap-2">
+    <div class="flex items-center gap-2 lg:order-2">
       <slot name="page-header-actions">
         {
           actions.length
@@ -74,7 +66,7 @@ const { title, class: className, variant, ...props } = Astro.props;
                     href={action.href}
                     class:list={[
                       buttonVariants({ variant: "ghost" }),
-                      "dark:hover:text-black text-sm inline-flex rounded",
+                      "inline-flex rounded text-sm dark:hover:text-black"
                     ]}
                   >
                     {action.name}
@@ -83,35 +75,25 @@ const { title, class: className, variant, ...props } = Astro.props;
               })
             : null
         }
-        <DarkModeSwitch />
+        <!-- <DarkModeSwitch /> -->
+        <ThemeSwitch />
       </slot>
       <slot name="page-header-mobile-menu">
         <button
           id="mobile-menu-toggle"
           type="button"
-          class:list={[
-            buttonVariants({ variant: "ghost" }),
-            "inline-flex rounded hover:text-background lg:hidden",
-          ]}
+          class:list={[buttonVariants({ variant: "ghost" }), "inline-flex rounded hover:text-background lg:hidden"]}
           aria-controls="mobile-menu"
           aria-expanded="false"
         >
           <span class="sr-only">Open main menu</span>
-          <svg
-            class="w-6 h-6"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
+          <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
             ><path
               fill-rule="evenodd"
               d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
               clip-rule="evenodd"></path></svg
           >
-          <svg
-            class="hidden w-6 h-6"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
+          <svg class="hidden h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
             ><path
               fill-rule="evenodd"
               d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -123,37 +105,30 @@ const { title, class: className, variant, ...props } = Astro.props;
     <nav
       id="mobile-menu"
       class:list={[
-        "hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1",
+        "hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto",
         "lg:static lg:bg-transparent",
-        "absolute left-0 right-0 top-full bg-background z-50",
+        "absolute left-0 right-0 top-full z-50 bg-background"
       ]}
     >
       <slot>
-        <ul
-          class="flex flex-col mt-4 font-medium lg:flex-row lg:gap-x-4 lg:mt-0"
-        >
+        <ul class="mt-4 flex flex-col font-medium lg:mt-0 lg:flex-row lg:gap-x-4">
           {
             _links.length
               ? _links.map((link) => {
                   const linkStyles = [
                     "text-sm text-foreground/60 py-1 px-2 border-2 border-transparent rounded-md",
                     {
-                      "bg-foreground/10 text-background text-underline px-2 rounded-md cursor-auto":
-                        link.isActive,
+                      "bg-foreground/10 text-background text-underline px-2 rounded-md cursor-auto": link.isActive
                     },
                     {
                       "hover:border-foreground/50 hover:border-2 hover:text-foreground hover:cursor-pointer":
-                        !link.isActive,
-                    },
+                        !link.isActive
+                    }
                   ];
                   if (link.subs) {
                     return (
                       <li class:list={["mt-2 text-sm", ...linkStyles]}>
-                        <DropdownMenu
-                          trigger={link.name}
-                          items={link.subs}
-                          variant="unstyled"
-                        />
+                        <DropdownMenu trigger={link.name} items={link.subs} variant="unstyled" />
                       </li>
                     );
                   }
@@ -162,7 +137,7 @@ const { title, class: className, variant, ...props } = Astro.props;
                       <a
                         href={link.href}
                         class:list={[
-                          "text-sm block py-2 rounded border-b border-gray-100 lg:border-0 dark:border-gray-700",
+                          "block rounded border-b border-gray-100 py-2 text-sm lg:border-0 dark:border-gray-700"
                         ]}
                         aria-current={link.isActive ? "page" : undefined}
                       >
@@ -179,11 +154,7 @@ const { title, class: className, variant, ...props } = Astro.props;
   </div>
 </header>
 
-<div
-  id="mobile-menu-overlay"
-  class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"
->
-</div>
+<div id="mobile-menu-overlay" class="fixed inset-0 z-40 hidden bg-black bg-opacity-50"></div>
 
 <script>
   function toggleMobileMenu() {
@@ -196,8 +167,7 @@ const { title, class: className, variant, ...props } = Astro.props;
     mobileMenuOverlay?.classList.toggle("hidden");
     menuIcons?.forEach((icon) => icon.classList.toggle("hidden"));
 
-    const isExpanded =
-      mobileMenuToggle?.getAttribute("aria-expanded") === "true";
+    const isExpanded = mobileMenuToggle?.getAttribute("aria-expanded") === "true";
     mobileMenuToggle?.setAttribute("aria-expanded", (!isExpanded).toString());
   }
 

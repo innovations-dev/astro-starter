@@ -1,36 +1,36 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: ["class", '[data-theme="dark"]'],
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     container: {
       center: true,
       padding: "2rem",
       screens: {
-        "2xl": "1400px",
-      },
+        "2xl": "1400px"
+      }
     },
     extend: {
       keyframes: {
         parallax: {
           "0%": { transform: "translateY(0)" },
           "100%": {
-            transform:
-              "translateY(calc(var(--parallax-direction) * var(--parallax-speed)))",
-          },
+            transform: "translateY(calc(var(--parallax-direction) * var(--parallax-speed)))"
+          }
         },
         "slide-from-bottom": {
           "0%": { transform: "translateY(100%)" },
-          "100%": { transform: "translateY(0)" },
-        },
+          "100%": { transform: "translateY(0)" }
+        }
       },
       animation: {
         parallax: "parallax 1s linear infinite alternate",
-        "slide-from-bottom": "slide-from-bottom 1s ease-in-cubic-gs",
+        "slide-from-bottom": "slide-from-bottom 1s ease-in-cubic-gs"
       },
       textShadow: {
         sm: "0 1px 2px var(--tw-shadow-color)",
         DEFAULT: "0 2px 4px var(--tw-shadow-color)",
-        lg: "0 8px 16px var(--tw-shadow-color)",
+        lg: "0 8px 16px var(--tw-shadow-color)"
       },
       colors: {
         border: "hsl(var(--border))",
@@ -40,37 +40,37 @@ export default {
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          foreground: "hsl(var(--primary-foreground))"
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          foreground: "hsl(var(--secondary-foreground))"
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          foreground: "hsl(var(--destructive-foreground))"
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          foreground: "hsl(var(--muted-foreground))"
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          foreground: "hsl(var(--accent-foreground))"
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          foreground: "hsl(var(--popover-foreground))"
         },
         card: {
           DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
+          foreground: "hsl(var(--card-foreground))"
+        }
       },
       borderRadius: {
         lg: `var(--radius)`,
         md: `calc(var(--radius) - 2px)`,
-        sm: "calc(var(--radius) - 4px)",
+        sm: "calc(var(--radius) - 4px)"
       },
       transitionTimingFunction: {
         cubic: "cubic-bezier(0.645,0.045,0.355,1)",
@@ -99,17 +99,14 @@ export default {
         "out-back": "cubic-bezier(0.34, 1.56, 0.64, 1)",
         "in-out-back": "cubic-bezier(0.68, -0.6, 0.32, 1.6)",
         "in-cubic-gs": "cubic-bezier(0.25, 1, 0.87, 0.85)",
-        "out-cubic-gs": "cubic-bezier(0.25, 1, 0.87, 0.85)",
-      },
+        "out-cubic-gs": "cubic-bezier(0.25, 1, 0.87, 0.85)"
+      }
     },
     variants: {
       extend: {
-        animation: ["motion-safe"],
-      },
-    },
+        animation: ["motion-safe"]
+      }
+    }
   },
-  plugins: [
-    require("tailwindcss-animate"),
-    require("@adam.plesnik/tailwindcss-scroll-driven-animations"),
-  ],
+  plugins: [require("tailwindcss-animate"), require("@adam.plesnik/tailwindcss-scroll-driven-animations")]
 };

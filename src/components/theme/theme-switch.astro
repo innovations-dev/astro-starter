@@ -1,0 +1,31 @@
+---
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+import Button from "../button/button.astro";
+
+interface Props extends HTMLAttributes<"button"> {}
+
+const { class: classes, ...rest } = Astro.props;
+---
+
+<Button
+  class:list={["dark:hidden", classes]}
+  {...rest}
+  variant="icon-ghost"
+  label="Toggle dark mode"
+  onclick="document.dispatchEvent(new CustomEvent('set-theme', { detail: 'dark' }))"
+>
+  <span class="sr-only">Toggle Theme</span>
+  <Icon class="text-xl text-foreground" name="heroicons-outline:moon" />
+</Button>
+
+<Button
+  class:list={["hidden text-foreground dark:block", classes]}
+  {...rest}
+  variant="icon-ghost"
+  label="Toggle dark mode"
+  onclick="document.dispatchEvent(new CustomEvent('set-theme', { detail: 'light' }))"
+>
+  <span class="sr-only">Toggle Theme</span>
+  <Icon class="text-xl text-foreground" name="heroicons-outline:sun" />
+</Button>

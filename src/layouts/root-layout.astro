@@ -1,6 +1,6 @@
 ---
 import type { HeadProps } from "./head.astro";
-
+import Themes from "astro-themes";
 import TwIndicator from "@/components/theme/tw-indicator.astro";
 import Toast from "@/components/toast.astro";
 import Head from "./head.astro";
@@ -14,6 +14,7 @@ interface Props extends HeadProps {}
 
 <!doctype html>
 <html lang="en">
+  <Themes />
   <Head {...Astro.props} />
   <body>
     <Header variant="floating" />
