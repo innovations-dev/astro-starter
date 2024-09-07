@@ -1,0 +1,40 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cva, type VariantProps } from "class-variance-authority";
+
+const inputVariants = cva(
+  "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        default: "",
+        error: "border-destructive"
+      }
+    },
+    defaultVariants: {
+      variant: "default"
+    }
+  }
+);
+
+export interface InputProps extends HTMLAttributes<"input">, VariantProps<typeof inputVariants> {
+  label?: string;
+  error?: string;
+}
+
+const { label, error, variant, class: className, ...props } = Astro.props;
+
+const id = props.id || props.name || Math.random().toString(36).substring(2, 9);
+---
+
+<div class="w-full">
+  {
+    label && (
+      <label for={id} class="mb-2 block text-sm font-medium text-foreground">
+        {label}
+      </label>
+    )
+  }
+  <input id={id} class:list={[inputVariants({ variant, className })]} {...props} />
+  {error && <p class="mt-2 text-sm text-destructive">{error}</p>}
+</div>

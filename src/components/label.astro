@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cva, type VariantProps } from "class-variance-authority";
+
+const labelVariants = cva(
+  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+  {
+    variants: {
+      variant: {
+        default: "text-foreground",
+        error: "text-destructive"
+      }
+    },
+    defaultVariants: {
+      variant: "default"
+    }
+  }
+);
+
+interface Props extends HTMLAttributes<"label">, VariantProps<typeof labelVariants> {
+  for: string;
+}
+
+const { for: forAttr, variant, class: className, ...props } = Astro.props;
+---
+
+<label for={forAttr} class={labelVariants({ variant, class: className })} {...props}>
+  <slot />
+</label>
