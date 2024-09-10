@@ -4,11 +4,14 @@ import Textarea from "@/components/textarea.astro";
 import Button from "@/components/button/button.astro";
 import Label from "@/components/label.astro";
 import Select from "@/components/select/select.astro";
+import Checkbox from "./checkbox.astro";
 
 const options = [
   { value: "option1", label: "Option 1" },
   { value: "option2", label: "Option 2" },
-  { value: "option3", label: "Option 3" }
+  { value: "option3", label: "Option 3" },
+  { value: "option4", label: "Option 4" },
+  { value: "option5", label: "Option 5" }
 ];
 ---
 
@@ -32,7 +35,11 @@ const options = [
   </div>
   <div>
     <Label for="select">Select:</Label>
-    <Select options={options} name="example-select" label="Choose an option" defaultValue="option2" size="default" />
+    <Select options={options} id="select" name="select" defaultValue="option2" />
+  </div>
+  <div>
+    <Label for="checkbox">Checkbox:</Label>
+    <Checkbox id="checkbox" name="select" label="Choose an option" size="default" />
   </div>
   <Button type="submit" label="send" class="ml-auto max-w-24">Send</Button>
   <p id="form-status" aria-live="polite"></p>

@@ -1,0 +1,37 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"input"> {
+  label?: string;
+  checked?: boolean;
+  disabled?: boolean;
+}
+
+const { label, checked = false, disabled = false, class: className, ...props } = Astro.props;
+
+const id = props.id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class="flex items-center space-x-2">
+  <input
+    type="checkbox"
+    id={id}
+    checked={checked}
+    disabled={disabled}
+    class:list={[
+      "peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
+      className
+    ]}
+    {...props}
+  />
+  {
+    label && (
+      <label
+        for={id}
+        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        {label}
+      </label>
+    )
+  }
+</div>
