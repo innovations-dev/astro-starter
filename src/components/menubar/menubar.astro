@@ -1,0 +1,109 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  class?: string;
+}
+
+const { class: className, ...props } = Astro.props;
+---
+
+<div
+  class:list={["inline-flex h-10 items-center space-x-1 rounded-md border bg-background p-1", className]}
+  role="menubar"
+  {...props}
+>
+  <slot />
+</div>
+
+<script>
+  const menubar = document.querySelector('[role="menubar"]') as HTMLElement | null;
+  let activeMenu: HTMLElement | null = null;
+
+  menubar?.addEventListener("click", (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    const trigger = target.closest('[role="menuitem"]') as HTMLElement | null;
+    if (trigger) {
+      const menuId = trigger.getAttribute("data-menu-id");
+      if (menuId) {
+        const content = document.getElementById(menuId);
+        if (content) {
+          if (activeMenu && activeMenu !== content) {
+            activeMenu.style.display = "none";
+            const prevSibling = activeMenu.previousElementSibling;
+            if (prevSibling instanceof HTMLElement) {
+              prevSibling.setAttribute("data-state", "closed");
+              prevSibling.setAttribute("aria-expanded", "false");
+            }
+          }
+        }
+
+        if (content && content.style.display === "none") {
+          content.style.display = "block";
+          trigger.setAttribute("data-state", "open");
+          trigger.setAttribute("aria-expanded", "true");
+          activeMenu = content;
+        } else if (content) {
+          content.style.display = "none";
+          trigger.setAttribute("data-state", "closed");
+          trigger.setAttribute("aria-expanded", "false");
+          activeMenu = null;
+        }
+      }
+    }
+  });
+
+  document.addEventListener("click", (e: MouseEvent) => {
+    const target = e.target as Node;
+    if (menubar && !menubar.contains(target) && activeMenu) {
+      activeMenu.style.display = "none";
+      const prevSibling = activeMenu.previousElementSibling;
+      if (prevSibling instanceof HTMLElement) {
+        prevSibling.setAttribute("data-state", "closed");
+        prevSibling.setAttribute("aria-expanded", "false");
+      }
+      activeMenu = null;
+    }
+  });
+
+  function handleKeyDown(e: KeyboardEvent) {
+    if (!activeMenu) return;
+
+    const items = Array.from(activeMenu.querySelectorAll('[role="menuitem"]'));
+    const currentIndex = items.indexOf(document.activeElement as HTMLElement);
+
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        if (currentIndex < items.length - 1) {
+          (items[currentIndex + 1] as HTMLElement).focus();
+        }
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        if (currentIndex > 0) {
+          (items[currentIndex - 1] as HTMLElement).focus();
+        }
+        break;
+      case "Escape":
+        e.preventDefault();
+        closeActiveMenu();
+        break;
+    }
+  }
+
+  function closeActiveMenu() {
+    if (activeMenu) {
+      activeMenu.style.display = "none";
+      const prevSibling = activeMenu.previousElementSibling;
+      if (prevSibling instanceof HTMLElement) {
+        prevSibling.setAttribute("data-state", "closed");
+        prevSibling.setAttribute("aria-expanded", "false");
+        prevSibling.focus();
+      }
+      activeMenu = null;
+    }
+  }
+
+  menubar?.addEventListener("keydown", handleKeyDown);
+</script>
