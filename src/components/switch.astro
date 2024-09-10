@@ -1,0 +1,86 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cva, type VariantProps } from "class-variance-authority";
+
+interface Props extends HTMLAttributes<"button">, VariantProps<typeof switchVariants> {
+  checked?: boolean;
+  disabled?: boolean;
+}
+
+const { checked = false, disabled = false, size = "default", class: className, ...props } = Astro.props;
+
+const switchVariants = cva(
+  "peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input",
+  {
+    variants: {
+      size: {
+        default: "h-6 w-11",
+        sm: "h-5 w-9",
+        lg: "h-7 w-13"
+      }
+    },
+    defaultVariants: {
+      size: "default"
+    }
+  }
+);
+
+const thumbVariants = cva(
+  "pointer-events-none block rounded-full bg-background shadow-lg ring-0 transition-transform",
+  {
+    variants: {
+      size: {
+        default: "h-5 w-5",
+        sm: "h-4 w-4",
+        lg: "h-6 w-6"
+      }
+    },
+    defaultVariants: {
+      size: "default"
+    }
+  }
+);
+---
+
+<button
+  type="button"
+  role="switch"
+  aria-checked={checked}
+  data-state={checked ? "checked" : "unchecked"}
+  disabled={disabled}
+  class:list={[switchVariants({ size, className })]}
+  {...props}
+>
+  <span class:list={[thumbVariants({ size }), "shrink-0", checked ? "translate-x-5" : "translate-x-0"]}></span>
+</button>
+
+<script>
+  function setupSwitches() {
+    document.querySelectorAll('button[role="switch"]').forEach((el) => {
+      if (!el.hasAttribute("data-switch-initialized")) {
+        el.addEventListener("click", () => {
+          if (el.getAttribute("disabled") === "true") return;
+          const isChecked = el.getAttribute("aria-checked") === "true";
+          const newState = !isChecked;
+          el.setAttribute("aria-checked", newState.toString());
+          el.setAttribute("data-state", newState ? "checked" : "unchecked");
+
+          // Update the thumb position
+          const thumb = el.querySelector("span");
+          if (thumb) {
+            thumb.classList.toggle("translate-x-0", !newState);
+            thumb.classList.toggle("translate-x-5", newState);
+          }
+
+          // Dispatch a custom event for form handling
+          el.dispatchEvent(new CustomEvent("switch:change", { detail: { checked: newState }, bubbles: true }));
+        });
+        el.setAttribute("data-switch-initialized", "true");
+      }
+    });
+  }
+
+  // Run the setup immediately and after any client-side navigation
+  setupSwitches();
+  document.addEventListener("astro:after-swap", setupSwitches);
+</script>

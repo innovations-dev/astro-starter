@@ -5,6 +5,7 @@ import Button from "@/components/button/button.astro";
 import Label from "@/components/label.astro";
 import Select from "@/components/select/select.astro";
 import Checkbox from "./checkbox.astro";
+import Switch from "./switch.astro";
 
 const options = [
   { value: "option1", label: "Option 1" },
@@ -41,6 +42,10 @@ const options = [
     <Label for="checkbox">Checkbox:</Label>
     <Checkbox id="checkbox" name="select" label="Choose an option" size="default" />
   </div>
+  <div class="flex items-center space-x-2">
+    <Switch id="newsletter" name="newsletter" />
+    <Label for="newsletter">Subscribe to newsletter</Label>
+  </div>
   <Button type="submit" label="send" class="ml-auto max-w-24">Send</Button>
   <p id="form-status" aria-live="polite"></p>
 </form>
@@ -60,10 +65,11 @@ const options = [
         const name = formData.get("name");
         const email = formData.get("email");
         const message = formData.get("message");
+        const newsletter = document.getElementById("newsletter")?.getAttribute("aria-checked") === "true";
 
         const response = await fetch(form.action, {
           method: "POST",
-          body: JSON.stringify({ name, email, message })
+          body: JSON.stringify({ name, email, message, newsletter })
         });
 
         const result = await response.json();
@@ -72,6 +78,12 @@ const options = [
           formStatus.textContent = result.message;
           formStatus.className = "success";
           form.reset();
+          // Reset the switch state
+          const newsletterSwitch = document.getElementById("newsletter");
+          if (newsletterSwitch) {
+            newsletterSwitch.setAttribute("aria-checked", "false");
+            newsletterSwitch.setAttribute("data-state", "unchecked");
+          }
         } else {
           throw new Error(result.message || "Server returned an error.");
         }
@@ -83,7 +95,3 @@ const options = [
     });
   }
 </script>
-
-<style>
-  /* ... (styles remain the same) ... */
-</style>
