@@ -3,9 +3,9 @@ import type { HTMLAttributes } from "astro/types";
 
 type Props = HTMLAttributes<"span">;
 
-const { ...props } = Astro.props;
+const { class: className, ...props } = Astro.props;
 ---
 
-<span {...props}>
+<span class:list={["block truncate", className]} {...props} data-select-value>
   <slot />
 </span>

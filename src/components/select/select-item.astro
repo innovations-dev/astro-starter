@@ -9,12 +9,15 @@ const { value, class: className, ...props } = Astro.props;
 ---
 
 <div
-  role="option"
-  data-value={value}
   class:list={[
-    "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+    "relative flex w-full cursor-pointer select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none",
+    "hover:bg-accent hover:text-accent-foreground",
+    "focus:bg-accent focus:text-accent-foreground",
+    "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
     className
   ]}
+  data-value={value}
+  data-select-item
   {...props}
 >
   <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
@@ -28,7 +31,7 @@ const { value, class: className, ...props } = Astro.props;
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="h-4 w-4"
+      class="h-4 w-4 opacity-0 data-[state=checked]:opacity-100"
     >
       <polyline points="20 6 9 17 4 12"></polyline>
     </svg>

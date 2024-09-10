@@ -1,11 +1,14 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<"div">;
+interface Props extends HTMLAttributes<"div"> {
+  label?: string;
+}
 
-const { ...props } = Astro.props;
+const { label, class: className, ...props } = Astro.props;
 ---
 
-<div role="group" {...props}>
+<div class:list={["px-2 py-1.5 text-sm font-semibold", className]} {...props}>
+  {label && <div class="text-muted-foreground">{label}</div>}
   <slot />
 </div>
