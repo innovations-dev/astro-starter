@@ -47,7 +47,7 @@ const listboxId = `listbox-${id}`;
     aria-haspopup="listbox"
     aria-expanded="false"
     aria-labelledby={`${id}-label`}
-    class="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm hover:bg-gray-50 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+    class="bg-bacckground flex w-full items-center justify-between rounded-md border border-border px-3 py-2 text-sm shadow-sm hover:bg-muted-foreground focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
   >
     <SelectValue data-select-value class="block truncate">
       {defaultValue ? options.find((opt) => opt.value === defaultValue)?.label : "Select an option"}
@@ -67,7 +67,7 @@ const listboxId = `listbox-${id}`;
       data-select-content
       role="listbox"
       aria-labelledby={`${id}-label`}
-      class="invisible absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border border-gray-300 bg-white opacity-0 shadow-lg transition-all duration-200 ease-in-out"
+      class="invisible absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border border-border bg-background opacity-0 shadow-lg transition-all duration-200 ease-in-out"
     >
       {
         options.map((option, index) => (
@@ -78,7 +78,7 @@ const listboxId = `listbox-${id}`;
             role="option"
             id={`${listboxId}-option-${index}`}
             aria-selected={option.value === defaultValue ? "true" : "false"}
-            class="relative cursor-default select-none py-2 pl-3 pr-9 transition-colors duration-200 ease-in-out hover:bg-indigo-100 focus:bg-indigo-100 focus:outline-none"
+            class="relative cursor-default select-none py-2 pl-3 pr-9 transition-colors duration-200 ease-in-out hover:bg-accent focus:bg-accent focus:outline-none"
             tabindex="-1"
           >
             {option.label}
