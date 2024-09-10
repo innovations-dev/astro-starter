@@ -20,6 +20,9 @@ Key Principles:
 -
 - Use shadcn/ui styles as inspiration for components and design systems.
 - Use class-variance-authority for creating variants and themes for components that are compatible with astro's class:list feature.
+- Use shadcn/ui primitives as inspiration for creating custom primitives that are highly reusable and composable.
+- Use radix-ui primitives as inspiration for creating custom primitives that are highly reusable and composable.
+- Do not create or place new components in the /components/ui directory.
 - Use tailwind whenever possible to add logic to the styles reducing the need for Javascript.
 - Use Typescript for type safety and autocomplete to improve development speed and reduce errors.
 - Use Zod for validation of the data and to prevent errors (available in Astro's astro:content package).
@@ -84,6 +87,7 @@ Astro Project Structure
   Styling
 
   - Use Astro's scoped styling with <style> tags in .astro files.
+  - use Astro's class:list feature for dynamic class generation instead of the cn utility function.
   - Leverage global styles when necessary, importing them in layouts.
   - Use shadcn/ui styles as inspiration for components and design systems.
     - Specifically use the color theme css variables for handling light and dark themes.
