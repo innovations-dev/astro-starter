@@ -1,6 +1,6 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import { headerVariants, type HeaderProps } from "./header";
+import { headerVariants } from "./header";
 import type { VariantProps } from "class-variance-authority";
 import type { Brand } from "@/schema/brand";
 import type { Link } from "@/schema/link";
@@ -75,7 +75,6 @@ const { title, class: className, variant, ...props } = Astro.props;
               })
             : null
         }
-        <!-- <DarkModeSwitch /> -->
         <ThemeSwitch />
       </slot>
       <slot name="page-header-mobile-menu">
@@ -137,7 +136,7 @@ const { title, class: className, variant, ...props } = Astro.props;
                       <a
                         href={link.href}
                         class:list={[
-                          "block rounded border-b border-gray-100 py-2 text-sm lg:border-0 dark:border-gray-700"
+                          "block rounded border-b border-gray-100 py-2 text-sm dark:border-gray-700 lg:border-0"
                         ]}
                         aria-current={link.isActive ? "page" : undefined}
                       >

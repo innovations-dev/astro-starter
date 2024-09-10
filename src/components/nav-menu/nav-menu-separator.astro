@@ -1,0 +1,9 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"li"> {}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<li class:list={["my-1 h-px bg-border", className]} role="separator" {...rest}></li>
