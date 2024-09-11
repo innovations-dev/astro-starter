@@ -1,0 +1,11 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"p"> {}
+
+const { ...attrs } = Astro.props;
+---
+
+<p class="text-sm text-muted-foreground" {...attrs}>
+  <slot />
+</p>

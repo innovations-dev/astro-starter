@@ -3,14 +3,52 @@ import Alert from "@/components/alert.astro";
 import ContactForm from "@/components/contact-form.astro";
 import ModularHero from "@/components/hero/modular-hero.astro";
 import LogoCarousel from "@/components/logo-carousel.astro";
+import MenubarSeparator from "@/components/menubar/menubar-separator.astro";
 import Layout from "@/layouts/root-layout.astro";
 import MenubarContent from "../components/menubar/menubar-content.astro";
 import MenubarItem from "../components/menubar/menubar-item.astro";
 import MenubarMenu from "../components/menubar/menubar-menu.astro";
-import MenubarSeparator from "../components/menubar/menubar-separator.astro";
 import MenubarTrigger from "../components/menubar/menubar-trigger.astro";
 import Menubar from "../components/menubar/menubar.astro";
 import "../styles/global.css";
+import AlertDialog from "../components/alert-dialog/alert-dialog.astro";
+import AlertDialogTitle from "../components/alert-dialog/alert-dialog-title.astro";
+import AlertDialogDescription from "../components/alert-dialog/alert-dialog-description.astro";
+import AlertDialogFooter from "../components/alert-dialog/alert-dialog-footer.astro";
+import AlertDialogAction from "../components/alert-dialog/alert-dialog-action.astro";
+import AlertDialogCancel from "../components/alert-dialog/alert-dialog-cancel.astro";
+import AlertDialogTrigger from "../components/alert-dialog/alert-dialog-trigger.astro";
+
+const menubar = [
+  {
+    id: "file-menu",
+    label: "File",
+    items: [{ label: "New File" }, { label: "Open..." }, { label: "Save" }, { label: "Exit" }]
+  },
+  {
+    id: "edit-menu",
+    label: "Edit",
+    items: [
+      { label: "Undo" },
+      { label: "Redo" },
+      { label: "Cut" },
+      { label: "Copy" },
+      { label: "Paste" },
+      { label: "Show Sidebar" },
+      { label: "Show Status Bar" }
+    ]
+  },
+  {
+    id: "view-menu",
+    label: "View",
+    items: [{ label: "Zoom In" }, { label: "Zoom Out" }, { label: "Show Sidebar" }, { label: "Show Status Bar" }]
+  },
+  {
+    id: "help-menu",
+    label: "Help",
+    items: [{ label: "Documentation" }, { label: "Report an Issue" }, { label: "About" }]
+  }
+];
 ---
 
 <Layout title="Home">
@@ -34,50 +72,35 @@ import "../styles/global.css";
       <ContactForm />
 
       <div class="mb-8 flex justify-center">
-        <!-- Added this wrapper div -->
         <Menubar>
-          <MenubarMenu>
-            <MenubarTrigger data-menu-id="file-menu">File</MenubarTrigger>
-            <MenubarContent id="file-menu">
-              <MenubarItem>New File</MenubarItem>
-              <MenubarItem>Open...</MenubarItem>
-              <MenubarItem>Save</MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem>Exit</MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger data-menu-id="edit-menu">Edit</MenubarTrigger>
-            <MenubarContent id="edit-menu">
-              <MenubarItem>Undo</MenubarItem>
-              <MenubarItem>Redo</MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem>Cut</MenubarItem>
-              <MenubarItem>Copy</MenubarItem>
-              <MenubarItem>Paste</MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger data-menu-id="view-menu">View</MenubarTrigger>
-            <MenubarContent id="view-menu">
-              <MenubarItem>Zoom In</MenubarItem>
-              <MenubarItem>Zoom Out</MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem inset>Show Sidebar</MenubarItem>
-              <MenubarItem inset>Show Status Bar</MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger data-menu-id="help-menu">Help</MenubarTrigger>
-            <MenubarContent id="help-menu">
-              <MenubarItem>Documentation</MenubarItem>
-              <MenubarItem>Report an Issue</MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem>About</MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
+          {
+            menubar.map((menu) => (
+              <MenubarMenu>
+                <MenubarTrigger data-menu-id={menu.id}>{menu.label}</MenubarTrigger>
+                <MenubarContent id={menu.id}>
+                  {menu.items.map((item, index) => (
+                    <Fragment key={index}>
+                      {index < menu.items.length - 1 && <MenubarSeparator />}
+                      <MenubarItem>{item.label}</MenubarItem>
+                    </Fragment>
+                  ))}
+                </MenubarContent>
+              </MenubarMenu>
+            ))
+          }
         </Menubar>
       </div>
+      <AlertDialog id="exampleDialog">
+        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+        <AlertDialogDescription>
+          This action cannot be undone. This will permanently delete your account and remove your data from our servers.
+        </AlertDialogDescription>
+        <AlertDialogFooter>
+          <AlertDialogCancel data-dialog-trigger="exampleDialog">Cancel</AlertDialogCancel>
+          <AlertDialogAction data-confirm-action="exampleDialog">Continue</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialog>
+      <AlertDialogTrigger dialogId="exampleDialog">Open Alert Dialog</AlertDialogTrigger>
       <Alert title="Heads up!">
         <p>You can add components and dependencies to your app using the cli.</p>
       </Alert>
@@ -89,3 +112,24 @@ import "../styles/global.css";
     </section>
   </main>
 </Layout>
+
+<script>
+  function handleConfirm(dialogId: string) {
+    console.log("Action confirmed!");
+    alert("Action confirmed!");
+    if (typeof (window as any).toggleDialog === "function") {
+      (window as any).toggleDialog(dialogId);
+    }
+  }
+
+  document.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement;
+    const confirmAction = target.closest("[data-confirm-action]");
+    if (confirmAction) {
+      const dialogId = confirmAction.getAttribute("data-confirm-action");
+      if (dialogId) {
+        handleConfirm(dialogId);
+      }
+    }
+  });
+</script>

@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"button"> {
+  dialogId: string;
+}
+
+const { dialogId, ...attrs } = Astro.props;
+---
+
+<button
+  class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+  data-dialog-trigger={dialogId}
+  {...attrs}
+>
+  <slot />
+</button>
+
+<script>
+  document.addEventListener("click", (event) => {
+    const trigger = (event.target as Element).closest("[data-dialog-trigger]");
+    if (trigger) {
+      const dialogId = trigger.getAttribute("data-dialog-trigger");
+      if (dialogId && typeof (window as any).toggleDialog === "function") {
+        (window as any).toggleDialog(dialogId);
+      }
+    }
+  });
+</script>
